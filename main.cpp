@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include "functins.h"
 using namespace std;
 
 int main()
