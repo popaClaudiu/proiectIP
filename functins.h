@@ -1,6 +1,7 @@
 #include <math.h>
 #define infinit 10000000000
 #define epsilon 0.000000001
+#define pi 3.1415926
 
 bool diferitDeInfinit(float x)
 {
