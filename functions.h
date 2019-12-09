@@ -1,7 +1,12 @@
 #include <math.h>
+#include <string.h>
 #define infinit 10000000000
 #define epsilon 0.000000001
 #define pi 3.1415926
+
+/*
+    Functii elementare din matematica
+*/
 
 bool diferitDeInfinit(float x)
 {
@@ -153,3 +158,78 @@ bool maiMare(float x, float y)
     return (x > y);
 }
 
+/*
+    Functiile programului
+*/
+
+/*
+*   Functia prioritate
+*
+*   prioritatea operatorului este direct proportionala de numarul asociat prioritatii
+*/
+
+int prioritate(char caracter)
+{
+    int pr = 5;
+
+    if (strchr("()", caracter))
+    {
+        pr = 0;
+    }
+    else if (strchr("+-", caracter))
+    {
+        pr = 1;
+    }
+    else if (strchr("*/", caracter))
+    {
+        pr = 2;
+    }
+    else if (caracter == '^') // operatorul putere
+    {
+        pr = 3;
+    }
+    else if (strchr("=#<>", caracter)) // operatori relationali
+    {
+        pr = 4;
+    }
+    else if (strchr("cslear", caracter)) // functiile cos,sin,ln,exp,abs,rad
+    {
+        pr = 5;
+    }
+
+    return pr;
+}
+
+bool esteIntreg(float v)
+{
+    return (v == int(v));
+}
+
+/*
+    Functia TipCaracter
+
+    q = constanta p
+    X = variabila x
+    tip = 100 pentru orice alt caracter aflat in expresie
+*/
+
+int tipCaracter(char c){
+    int tip = 100; 
+    if(strchr("0123456789",c)){
+        tip = 1;
+    }else if(strchr("cosinlexpabrd",c)){
+        tip = 2;
+    }else{
+        char operatori[]="()+-*/^Xq=#<>";
+        int i = 0;
+        while(operatori[i]){
+            if(c == operatori[i]){
+                tip = 3 + i;
+                break;
+            }
+            i++;
+        }
+    }
+
+    return tip;
+}
