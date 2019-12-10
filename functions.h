@@ -165,7 +165,7 @@ bool maiMare(float x, float y)
 /*
 *   Functia prioritate
 *
-*   prioritatea operatorului este direct proportionala de numarul asociat prioritatii
+*   prioritatea operatorului este direct proportionala de numarul asociat
 */
 
 int prioritate(char caracter)
