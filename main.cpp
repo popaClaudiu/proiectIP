@@ -59,7 +59,7 @@ void insereazaSpatiu(functie &E, int k)
 {
     int lung = strlen(E.expresie) + 1; // de refacut
     char s[255];
-    
+
     strcpy(s, E.expresie);
     for (int i = lung; i > k; i--)
     {
@@ -123,7 +123,7 @@ void evidentiazaVariabilele(functie &E)
         E.expresie[1] = 'X';
     if (E.expresie[strlen(E.expresie)] == 'x')
         E.expresie[strlen(E.expresie)] = 'X';
-        
+
 
     for (i = 1; i < strlen(E.expresie); i++)
     {
@@ -190,8 +190,22 @@ void citesteFuntie(functie& E)
     transformaInVector(E);
 }
 
+void afisare(functie E)
+{
+    int i;
+    float x,y;
+    for(i=0;i<=E.lungime;i++)
+    {
+        x=E.a+i*(E.b-E.a)/(E.n-1);
+        y=valoareFunctie(E,x);
+        if(diferitDeInfinit(y))
+            cout<<(i+1)<<"->"<<x<<"->"<<y;
+        else
+            cout<<i+1<<"."<<x<<"->nedefinit !";
+    }
+}
 int main()
-{   
-    
+{
+
     return 0;
 }
