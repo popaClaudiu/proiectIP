@@ -1,5 +1,7 @@
 #include <math.h>
 #include <string.h>
+#include<iostream>
+#include <stdlib.h>
 #define infinit 10000000000
 #define epsilon 0.000000001
 #define pi 3.1415926
@@ -94,19 +96,24 @@ float putere(float x, float y)
         return 1;
     else
     {
+        
         if (!diferitDeInfinit(x) || !diferitDeInfinit(y))
             return infinit;
         else if (y == int(y))
-        {
+        {            
+            std::cout<<"incepem sa inmultim"<<"\n";
             yi = trunc(y);
             p = 1;
-            for (i = 1; i < yi / 2; i++)
+            for (i = 1; i <= (yi / 2); i++)
             {
                 p *= x;
                 p *= p;
+                std::cout<<"p="<<p;
             }
-            if (estePar(yi))
-                p *= x;
+            if (!estePar(yi)){
+                p *= x; 
+                std::cout<<"p="<<p;
+            }
 
             return p;
         }
@@ -214,10 +221,12 @@ bool esteIntreg(float v)
 */
 
 int tipCaracter(char c){
+    
     int tip = 100; 
-    if(strchr("0123456789",c)){
+    if(strchr("0123456789.",c)){
         tip = 1;
-    }else if(strchr("cosinlexpabrd",c)){
+    }
+    else if(strchr("cosinlgexpabrd",c)){
         tip = 2;
     }else{
         char operatori[]="()+-*/^Xq=#<>";
@@ -232,4 +241,28 @@ int tipCaracter(char c){
     }
 
     return tip;
+}
+
+bool esteNumar(char s)
+{
+    if(strchr("0123456789", s)){
+        return true;
+    }
+    return false;
+}
+
+float valoareaOperandului(char* s, int& cod)
+{
+    char s1[255];
+    int i=0,j=0;
+
+    for(i=0;i<strlen(s);i++){
+        if(strchr("0987654321.",s[i])){
+            s1[j] = s[i];
+            j++;
+        }
+    }
+    
+    cod =  atof(s1);
+    return atof(s1);
 }
