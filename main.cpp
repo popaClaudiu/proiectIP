@@ -17,8 +17,9 @@ struct record
     char expresie[256];
     char cuvinte[100][10];
     int lungime;
-    float a, b;
-    int n;
+    float x;
+    // float a, b;
+    // int n;
 };
 
 typedef record functie;
@@ -164,6 +165,7 @@ void transformaInVector(functie &E)
 
 void evidentiazaVariabilele(functie &E)
 {
+    cout << "Evidentiez variabile";
     int i;
     if (E.expresie[0] == 'x')
         E.expresie[0] = 'X';
@@ -185,6 +187,36 @@ void evidentiazaVariabilele(functie &E)
     }
 }
 
+/**
+ * Pune zerouri in expresie
+ * Eg: (- => (0+ , (+ => (0+
+ * 
+*/
+void puneZerouriInExpresie(functie &E)
+{
+    cout << "zerori" << endl;
+    char s[255];
+    int n;
+    strcpy(s, E.expresie);
+    n = strlen(s);
+
+    if (s[0] == '+' || s[0] == '-')
+    {
+        for (int i = n + 1; i > 0; i--)
+        {
+            s[i] = s[i - 1];
+        }
+        s[0] = '0';
+    }else if ((s[n-1] == '+' || s[n-1] == '-') && s[n]=='\0')
+    {
+        s[n] = '0';
+        s[n+1] ='\0';
+    }
+    
+    strcpy(E.expresie, s);
+    cout << "Expresia:" << E.expresie << endl;
+}
+
 /*
 *  Pune spatii in expresie intre caractere de tipuri diferite
 */
@@ -193,6 +225,7 @@ void puneSpatiiInExpresie(functie &E)
 {
     int i, t1, t2;
 
+    puneZerouriInExpresie(E);
     evidentiazaVariabilele(E);
 
     i = 0;
@@ -223,14 +256,17 @@ void citesteFuntie(functie &E)
     cin.getline(E.expresie, 255);
     strcpy(E.expresie, lower(E.expresie));
 
-    printf("Dati intervalul !\n");
-    printf("a=");
-    scanf("%f", &E.a);
-    printf("b=");
-    scanf("%f", &E.b);
+    // printf("Dati intervalul !\n");
+    // printf("a=");
+    // scanf("%f", &E.a);
+    // printf("b=");
+    // scanf("%f", &E.b);
 
-    printf("Dati nr. de puncte = ");
-    scanf("%d", &E.n);
+    // printf("Dati nr. de puncte = ");
+    // scanf("%d", &E.n);
+
+    printf("Dati o valoare pentru x:");
+    scanf("%f", &E.x);
 
     puneSpatiiInExpresie(E);
     transformaInVector(E);
@@ -408,7 +444,7 @@ float valoareFunctiei(functie E, float x)
                             cout << "Am intrat in if 4" << endl;
                             operand[top1] = valoareOperand;
                             cout << endl
-                                 << "In varful stivei este operanzilor:" << operand[top1] << endl;
+                                 << "In varful stivei operanzilor este:" << operand[top1] << endl;
                             top2--;
                         }
                     }
@@ -458,27 +494,20 @@ float valoareFunctiei(functie E, float x)
 
 void afisare(functie E)
 {
-    int i;
-    float x, y;
-    for (i = 0; i <= E.lungime; i++)
-    {
-        x = E.a + i * (E.b - E.a) / (E.n - 1);
-        y = valoareFunctiei(E, x);
-        if (diferitDeInfinit(y))
-            cout << (i + 1) << "->" << x << "->" << y;
-        else
-            cout << i + 1 << "." << x << "->nedefinit !";
-    }
+    int y = valoareFunctiei(E, E.x);
+
+    if (diferitDeInfinit(y))
+        cout << E.x << "->" << y;
+    else
+        cout << E.x << "->nedefinit !";
 }
 
 int main()
 {
 
     citesteFuntie(E);
-    cout << "Expresia:" << E.expresie << endl;
     afiseazaCuvinte();
 
     afisare(E);
-
     return 0;
 }
