@@ -207,12 +207,13 @@ void puneZerouriInExpresie(functie &E)
             s[i] = s[i - 1];
         }
         s[0] = '0';
-    }else if ((s[n-1] == '+' || s[n-1] == '-') && s[n]=='\0')
+    }
+    else if ((s[n - 1] == '+' || s[n - 1] == '-') && s[n] == '\0')
     {
         s[n] = '0';
-        s[n+1] ='\0';
+        s[n + 1] = '\0';
     }
-    
+
     strcpy(E.expresie, s);
     cout << "Expresia:" << E.expresie << endl;
 }
@@ -494,12 +495,16 @@ float valoareFunctiei(functie E, float x)
 
 void afisare(functie E)
 {
-    int y = valoareFunctiei(E, E.x);
+    float y = valoareFunctiei(E, E.x);
 
     if (diferitDeInfinit(y))
-        cout << E.x << "->" << y;
+    {
+        printf("f(%f)=%f", E.x, y);
+    }
     else
-        cout << E.x << "->nedefinit !";
+    {
+        printf("f(%f)=nedefinit", E.x);
+    }
 }
 
 int main()
