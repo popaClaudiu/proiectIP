@@ -1,8 +1,21 @@
-#include <iostream>
+/**
+ * #############################
+ *  Evaluator matematic        *
+ * #############################
+ *  Realizat de : Popa Claudiu *
+ *                    si       *
+ *                Rosca Victor *
+ * #############################
+*/
 
+#include <iostream>
+#include <stdio.h>
 #include "functions.h"
 using namespace std;
 #define MAX_STIVA 100
+#define EROARE_ESTE_O_LITERA_DUPA_O_CIFRA 2
+#define EROARE_DUPA_PARANTEZA_NU_ESTE_OP_BINAR 4
+#define EROARE_SIRUL_SE_TERMINA_BRUSC 3
 
 /**
 * O functie este declarata sub forma unei structuri de tip inregistrare
@@ -24,7 +37,9 @@ struct record
 
 typedef record functie;
 functie E;
-
+void citesteFunctie(functie &E);
+void formeazaExpresia(functie &E);
+void valideazaFunctia(functie &E);
 void afiseazaCuvinte()
 {
     for (int i = 0; i < E.lungime; i++)
@@ -96,7 +111,7 @@ int Pos(char caracter, char v[255])
 */
 void insereazaSpatiu(functie &E, int k)
 {
-    int lung = strlen(E.expresie) + 1; // de refacut
+    int lung = strlen(E.expresie) + 1; 
     char s[255];
 
     strcpy(s, E.expresie);
@@ -213,6 +228,38 @@ void puneZerouriInExpresie(functie &E)
         s[n] = '0';
         s[n + 1] = '\0';
     }
+    else
+    {
+        cout << "Expresia:" << s;
+        int k = 0, i;
+        for (i = 0; i < n; i++)
+        {
+            if ((s[i] == ')' && strchr("+", s[i - 1]) && s[i - 1] != '\0'))
+            {
+                cout << "s[i]=" << s[i] << endl;
+                cout << "Expresie +):" << i << endl;
+                for (k = n; k > i; k--)
+                {
+                    s[k] = s[k - 1];
+                }
+                s[i] = '0';
+
+                cout << "s=" << s;
+            }
+            else if (s[i] == '(' && strchr("+", s[i + 1]) && s[i + 1] != '\0')
+            {
+                cout << "s[i]=" << s[i] << endl;
+                cout << "Expresie (+:" << i << endl;
+                for (k = n; k > i; k--)
+                {
+                    s[k] = s[k - 1];
+                }
+                s[++i] = '0';
+
+                cout << "s=" << s;
+            }
+        }
+    }
 
     strcpy(E.expresie, s);
     cout << "Expresia:" << E.expresie << endl;
@@ -226,6 +273,7 @@ void puneSpatiiInExpresie(functie &E)
 {
     int i, t1, t2;
 
+    valideazaFunctia(E);
     puneZerouriInExpresie(E);
     evidentiazaVariabilele(E);
 
@@ -247,36 +295,30 @@ void puneSpatiiInExpresie(functie &E)
     }
 }
 
-/*
- *    Citeste functia
-*/
-void citesteFuntie(functie &E)
+void formeazaExpresia(functie &E)
 {
-    printf("Dati expresia!\n");
-    printf("f(x)=");
-    cin.getline(E.expresie, 255);
-    strcpy(E.expresie, lower(E.expresie));
-
-    // printf("Dati intervalul !\n");
-    // printf("a=");
-    // scanf("%f", &E.a);
-    // printf("b=");
-    // scanf("%f", &E.b);
-
-    // printf("Dati nr. de puncte = ");
-    // scanf("%d", &E.n);
-
-    printf("Dati o valoare pentru x:");
-    scanf("%f", &E.x);
-
+    puneZerouriInExpresie(E);
     puneSpatiiInExpresie(E);
     transformaInVector(E);
-    afiseazaCuvinte();
 
-    for (int i = 0; i < E.lungime; i++)
+    for (int i = 0; i < E.lungime; i++) // Scot spatiile din fiecare cuvant
     {
         trim(E.cuvinte[i]);
     }
+}
+
+/*
+ *    Citeste functia
+*/
+void citesteFunctie(functie &E)
+{
+    printf("Dati expresia!\n");
+    printf("f(x)=");
+    scanf("%s", E.expresie);
+    strcpy(E.expresie, lower(E.expresie));
+
+    printf("Dati o valoare pentru x:");
+    scanf("%f", &E.x);
 }
 
 /**
@@ -316,7 +358,7 @@ float valoareFunctiei(functie E, float x)
         else
         {
             cout << "Am intrat in else" << endl;
-            if (strchr("qX(", E.cuvinte[i][0]) && E.cuvinte[i][0] != ' ')
+            if (strchr("qeX(", E.cuvinte[i][0]) && E.cuvinte[i][0] != ' ')
             {
                 cout << "Am intrat in if2" << endl;
                 switch (E.cuvinte[i][0])
@@ -325,6 +367,11 @@ float valoareFunctiei(functie E, float x)
                     top1++;
                     operand[top1] = pi;
                     cout << "In varful stivei PI este :" << operand[top1] << endl;
+                    break;
+                case 'e':
+                    top1++;
+                    operand[top1] = e;
+                    cout << "In varful stivei este constanta Euler :" << operand[top1] << endl;
                     break;
                 case 'X':
                     top1++;
@@ -353,7 +400,6 @@ float valoareFunctiei(functie E, float x)
                     if (top1 > 1)
                         x_1 = operand[top1 - 1];
                     x_2 = operand[top1];
-                    // break;
                     cout << "x_2=" << x_2 << endl;
                     if (strchr("=#<>+-/*^sclear", op[top2]))
                     {
@@ -493,6 +539,100 @@ float valoareFunctiei(functie E, float x)
     }
 }
 
+/**
+ * Afiseaza greselile gasite in expresia functiei
+*/
+void afiseazaGreseli(int greseli[2][10], int j){
+    for (int i = 0; i < j; i++)
+    {
+        switch (greseli[1][i])
+        {
+        case EROARE_ESTE_O_LITERA_DUPA_O_CIFRA:
+            printf("La pozitia %d. Dupa o cifra nu poate urma  o litera\n", greseli[0][i]);
+            break;
+
+        case EROARE_SIRUL_SE_TERMINA_BRUSC:
+            printf("La pozitia %d. Dupa o ( sirul se termina brusc\n", greseli[0][i]);
+            break;
+        case EROARE_DUPA_PARANTEZA_NU_ESTE_OP_BINAR:
+            printf("La pozitia %d. Dupa o ) nu poate urma un numar sau paranteza se termina brusc\n", greseli[0][i]);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+bool esteOLiteraDupaOCifra(char *s, int i)
+{
+    return (strchr("0987654321.", s[i]) && strchr("x", s[i + 1]) && s[i + 1] != '\0');
+}
+bool dupaParantezaEsteOperatorBinar(char *s, int i)
+{
+    return (strchr(")", s[i]) && (strchr("0987654321.", s[i + 1]) || strchr("+-*/^", s[i - 1])) && s[i + 1] != '\0');
+}
+/**
+ * Valideaza expresia functiei date
+*/
+void valideazaFunctia(functie &E)
+{
+    cout << "Validez expresia: " << E.expresie << endl;
+    char s[255];
+    strcpy(s, E.expresie);
+    int n = strlen(s), greseli[2][10], nrGreseli = 0, i, greseala = 0;
+    for (i = 0; i < 10; i++)
+    {
+        greseli[0][i] = 0;
+        greseli[1][i] = 0;
+    }
+    for (i = 0; i < n; i++)
+    {
+        if (esteOLiteraDupaOCifra(s, i))
+        {
+            greseala = 1;
+            greseli[0][nrGreseli] = i;
+            greseli[1][nrGreseli] = EROARE_ESTE_O_LITERA_DUPA_O_CIFRA;
+            nrGreseli++;
+        }
+        else if (dupaParantezaEsteOperatorBinar(s, i))
+        {
+            greseala = 1;
+            greseli[0][nrGreseli] = i;
+            greseli[1][nrGreseli] = EROARE_DUPA_PARANTEZA_NU_ESTE_OP_BINAR;
+            nrGreseli++;
+        }
+        else if (strchr("(", s[i])) // dupa un ( sirul se termina brusc
+        {
+            int sirulSeTerminaBrusc = 0;
+            for (int nrGreseli = i + 1; nrGreseli < n && !sirulSeTerminaBrusc; nrGreseli++)
+            {
+                if (strchr("x0987654321+-*^/", s[nrGreseli]) && s[nrGreseli + 1] == '\0')
+                {
+                    sirulSeTerminaBrusc = 1;
+                }
+            }
+            if (sirulSeTerminaBrusc)
+            {
+                greseala = 1;
+                greseli[0][nrGreseli] = i;
+                greseli[1][nrGreseli] = EROARE_SIRUL_SE_TERMINA_BRUSC;
+                nrGreseli++;
+            }
+        }
+    }
+
+    if (greseala)
+    {
+        afiseazaGreseli(greseli,nrGreseli);
+        strcpy(E.expresie, "\0");
+        citesteFunctie(E);
+        formeazaExpresia(E);
+    }else{
+        cout << "EXPRESIE CORECTA";
+    }
+}
+
+
 void afisare(functie E)
 {
     float y = valoareFunctiei(E, E.x);
@@ -509,10 +649,8 @@ void afisare(functie E)
 
 int main()
 {
-
-    citesteFuntie(E);
-    afiseazaCuvinte();
-
+    citesteFunctie(E);
+    formeazaExpresia(E);
     afisare(E);
     return 0;
 }
