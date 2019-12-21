@@ -1,0 +1,121 @@
+#include <iostream>
+#include <graphics.h>
+#include <winbgim.h>
+
+#define MAX 50
+#define APASAT 1
+#define RELAXAT 2
+
+void patrat(int x,int y,int lat)
+{
+    line(x-lat/2,y-lat/2,x-lat/2,y+lat/2);
+    line(x-lat/2,y+lat/2,x+lat/2,y+lat/2);
+    line(x+lat/2,y+lat/2,x+lat/2,y-lat/2);
+    line(x+lat/2,y-lat/2,x-lat/2,y-lat/2);
+}
+void dreptunghi(int x,int y,int lat,int inalt)
+{
+    line(x-lat/2,y-inalt/2,x-lat/2,y+lat/2);
+    line(x+lat/2,y+lat/2,x+lat/2,y-lat/2);
+}
+struct buton
+{
+    char text[MAX];
+    int marime; int x,y;
+    int x1,y1,x2,y2;
+};
+
+void initButon(buton& b, char text0[MAX], int x0, int y0, int m0)
+{
+    strcpy(b.text,text0);
+    b.x=x0; b.y=y0; b.marime=m0;
+    settextstyle(SIMPLEX_FONT,HORIZ_DIR,b.marime);
+    b.x1=x0-textwidth(b.text)/2-5;
+    b.x2=x0+textwidth(b.text)/2+5;
+    b.y1=y0-textheight(b.text)/2-5;;
+    b.y2=y0+textheight(b.text)/2+5;
+}
+
+void Trasare30careuri()
+{
+    int i,j,nr=1;
+    for(i=0; i<=600; i=i+100)
+    {
+        if(i==300)
+        {
+            for(j=100; j<=600; j=j+100) //Trasam cele 18 triunghiuri
+            {
+                line(j,i,j,600);
+                line(0,i+60*(j/100),600,i+60*(j/100));
+            }
+        }
+        if(i>=300)
+        {
+            for(j=0; j<=500; j=j+100)//1234567890sincos.radphielnexp+-*///#^=<>Del
+            {
+
+                if(nr==6)
+                {
+                    settextstyle(BOLD_FONT,HORIZ_DIR,6);
+                    outtextxy(j+5,i+5,"DEL");
+                    outtextxy(j+30,i+5+60,"/");
+                    outtextxy(j+30,i+5+120,"X");
+                    outtextxy(j+30,i+5+180,"-");
+                    outtextxy(j+30,i+5+240,"+");
+                    nr++;
+                }
+                if(nr==5)
+                {
+                    settextstyle(BOLD_FONT,HORIZ_DIR,6);
+                    outtextxy(j+20,i+5,"AC");
+                    outtextxy(j+30,i+5+60,"9");
+                    outtextxy(j+30,i+5+120,"6");
+                    outtextxy(j+30,i+5+180,"3");
+                    outtextxy(j+30,i+5+240,"=");
+                    nr++;
+                }
+                if(nr==4)
+                {
+                    settextstyle(BOLD_FONT,HORIZ_DIR,6);
+                    outtextxy(j+30,i+5,")");
+                    outtextxy(j+30,i+5+60,"8");
+                    outtextxy(j+30,i+5+120,"5");
+                    outtextxy(j+30,i+5+180,"2");
+                    outtextxy(j+30,i+5+240,".");
+                    nr++;
+                }
+                if(nr==3)
+                {
+                    settextstyle(BOLD_FONT,HORIZ_DIR,6);
+                    outtextxy(j+30,i+5,"(");
+                    outtextxy(j+30,i+5+60,"7");
+                    outtextxy(j+30,i+5+120,"4");
+                    outtextxy(j+30,i+5+180,"1");
+                    outtextxy(j+30,i+5+240,"0");
+                    nr++;
+                }
+                if(nr==2)
+                {
+                    settextstyle(BOLD_FONT,HORIZ_DIR,6);
+                    outtextxy(j+30,i+5,">");
+                    outtextxy(j+30,i+5+60,"^");
+                    outtextxy(j+5,i+5+120,"RAD");
+                    outtextxy(j+5,i+5+180,"exp");
+                    outtextxy(j+30,i+5+240,"e");
+                    nr++;
+                }
+                if(nr==1)
+                {
+                    settextstyle(BOLD_FONT,HORIZ_DIR,6);
+                    outtextxy(30,i+5,"<");
+                    buton b; initButon(b,"<",30,i+5,4);
+                    outtextxy(5,i+5+60,"sin");
+                    outtextxy(5,i+5+120,"cos");
+                    outtextxy(20,i+5+180,"ln");
+                    outtextxy(20,i+5+240,"PI");
+                    nr++;
+                }
+            }
+        }
+    }
+}
