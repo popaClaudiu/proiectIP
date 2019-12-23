@@ -111,7 +111,7 @@ int Pos(char caracter, char v[255])
 */
 void insereazaSpatiu(functie &E, int k)
 {
-    int lung = strlen(E.expresie) + 1; 
+    int lung = strlen(E.expresie) + 1;
     char s[255];
 
     strcpy(s, E.expresie);
@@ -205,7 +205,7 @@ void evidentiazaVariabilele(functie &E)
 /**
  * Pune zerouri in expresie
  * Eg: (- => (0+ , (+ => (0+
- * 
+ *
 */
 void puneZerouriInExpresie(functie &E)
 {
@@ -605,7 +605,7 @@ void valideazaFunctia(functie &E)
             greseli[1][nrGreseli] = EROARE_DUPA_PARANTEZA_NU_ESTE_OP_BINAR;
             nrGreseli++;
         }
-        else if (strchr("(", s[i])) 
+        else if (strchr("(", s[i]))
         {
             int sirulSeTerminaBrusc = 0;
             for (int nrGreseli = i + 1; nrGreseli < n && !sirulSeTerminaBrusc; nrGreseli++)
@@ -653,16 +653,16 @@ void afisare(functie E)
 
 int main()
 {
-  
-    window1 = initwindow(600,600,"evaluatorMatematic",true,true);
-    window2 = initwindow(600,600,"evaluatorMatematic",true,true);
+
+    int window1,window2;
+    /*citesteFuntie(E);
+    afiseazaCuvinte();
+
+    afisare(E);*/
+    window1=initwindow(600,600,"evaluatorMatematic",true,true);
+    window2=initwindow(600,600,"evaluatorMatematic",true,true);
     int num1=40,num2=30;
     Trasare30careuri(num1,num2,window1,window2);
-
-    citesteFunctie(E);
-    formeazaExpresia(E);
-    afisare(E);
-
     getch();
     closegraph();
     return 0;
