@@ -412,75 +412,76 @@ float valoareFunctiei(functie E, float x)
                         switch (op[top2])
                         {
                         case '=':
-                            cout << "Egalez";
+                            printf("Egalez : %f cu %f\n",x_1,x_2);
                             valoareOperand = egal(x_1, x_2);
                             break;
 
                         case '#':
-                            cout << "InEgalez";
+                            printf("Inegalez : %f cu %f\n",x_1,x_2);
                             valoareOperand = diferit(x_1, x_2);
                             break;
 
                         case '<':
                             cout << "Maimic";
+                            printf("%f < %f\n",x_1,x_2);
                             valoareOperand = maiMic(x_1, x_2);
                             break;
 
                         case '>':
-                            cout << "MaiMare";
+                            printf("%f > %f\n",x_1,x_2);
                             valoareOperand = maiMare(x_1, x_2);
                             break;
 
                         case '+':
-                            cout << "Adun:" << x_1 << "+" << x_2;
+                            printf("%f + %f\n",x_1,x_2);
                             valoareOperand = Plus(x_1, x_2);
                             break;
 
                         case '-':
-                            cout << "Scad";
+                            printf("%f - %f\n",x_1,x_2);
                             valoareOperand = Minus(x_1, x_2);
                             break;
 
                         case '*':
-                            cout << "Inmultesc";
+                            printf("%f * %f\n",x_1,x_2);
                             valoareOperand = inmultit(x_1, x_2);
                             break;
 
                         case '/':
-                            cout << "Impart";
+                            printf("%f / %f\n",x_1,x_2);
                             valoareOperand = impartit(x_1, x_2);
                             break;
                         case '^':
-                            cout << "Putere:" << x_1 << "^" << x_2;
+                            printf("%f^%f\n",x_1,x_2);
                             valoareOperand = putere(x_1, x_2);
                             break;
                         case 's':
-                            cout << "Sinus";
+                            printf("sin(%f)\n",x_2);
                             valoareOperand = sinus(x_2);
                             break;
 
                         case 'c':
-                            cout << "Cosinus";
+                            printf("cosin(%f)\n",x_2);
                             valoareOperand = cosinus(x_2);
                             break;
 
                         case 'l':
-                            cout << "Logaritm";
+                            printf("log(%f)\n",x_2);
                             valoareOperand = logaritm(x_2);
                             break;
 
                         case 'e':
-                            cout << "Exponentiala";
+                            printf("exp(%f)\n",x_2);
                             valoareOperand = exponential(x_2);
                             break;
 
                         case 'a':
-                            cout << "Modul";
+                            printf("abs(%f)\n",x_2);
                             valoareOperand = modul(x_2);
                             break;
 
                         case 'r':
-                            cout << "radical";
+                            printf("rad(%f)\n",x_2);
                             valoareOperand = radical(x_2);
                             break;
                         default:
@@ -489,12 +490,12 @@ float valoareFunctiei(functie E, float x)
 
                         if (strchr("+-^*/><=", op[top2]) && top1 > 1)
                         {
-                            cout << "Am intrat in if 3" << endl;
+                            cout << "Am intrat in if 3. Scad din stiva operatorilor" << endl;
                             top1--;
                         }
                         if (strchr("=#<>+-/*^sclear", op[top2]) && top1 > 0)
                         {
-                            cout << "Am intrat in if 4" << endl;
+                            cout << "Am intrat in if 4. Scad din stiva operanzilor" << endl;
                             operand[top1] = valoareOperand;
                             cout << endl
                                  << "In varful stivei operanzilor este:" << operand[top1] << endl;
