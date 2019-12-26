@@ -44,9 +44,7 @@ void afiseazaCuvinte()
 {
     for (int i = 0; i < E.lungime; i++)
     {
-
         cout << "i" << i << "-" << E.cuvinte[i];
-
         cout << endl;
     }
 }
@@ -317,8 +315,10 @@ void citesteFunctie(functie &E)
     scanf("%s", E.expresie);
     strcpy(E.expresie, lower(E.expresie));
 
-    printf("Dati o valoare pentru x:");
-    scanf("%f", &E.x);
+    if(strchr(E.expresie,'x')){
+        printf("Dati o valoare pentru x:");
+        scanf("%f", &E.x);
+    }
 }
 
 /**
@@ -567,10 +567,12 @@ bool esteOLiteraDupaOCifra(char *s, int i)
 {
     return (strchr("0987654321.", s[i]) && strchr("x", s[i + 1]) && s[i + 1] != '\0');
 }
+
 bool dupaParantezaEsteOperatorBinar(char *s, int i)
 {
     return (strchr(")", s[i]) && (strchr("0987654321.", s[i + 1]) || strchr("+-*/^", s[i - 1])) && s[i + 1] != '\0');
 }
+
 /**
  * Valideaza expresia functiei date
 */
@@ -601,7 +603,7 @@ void valideazaFunctia(functie &E)
             greseli[1][nrGreseli] = EROARE_DUPA_PARANTEZA_NU_ESTE_OP_BINAR;
             nrGreseli++;
         }
-        else if (strchr("(", s[i])) // dupa un ( sirul se termina brusc
+        else if (strchr("(", s[i])) 
         {
             int sirulSeTerminaBrusc = 0;
             for (int nrGreseli = i + 1; nrGreseli < n && !sirulSeTerminaBrusc; nrGreseli++)
