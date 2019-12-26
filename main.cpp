@@ -110,7 +110,7 @@ int Pos(char caracter, char v[255])
 */
 void insereazaSpatiu(functie &E, int k)
 {
-    int lung = strlen(E.expresie) + 1; 
+    int lung = strlen(E.expresie) + 1;
     char s[255];
 
     strcpy(s, E.expresie);
@@ -272,7 +272,6 @@ void puneSpatiiInExpresie(functie &E)
 {
     int i, t1, t2;
 
-    valideazaFunctia(E);
     puneZerouriInExpresie(E);
     evidentiazaVariabilele(E);
 
@@ -316,10 +315,12 @@ void citesteFunctie(functie &E)
     scanf("%s", E.expresie);
     strcpy(E.expresie, lower(E.expresie));
 
-    if(strchr(E.expresie,'x')){
+    if (strchr(E.expresie, 'x'))
+    {
         printf("Dati o valoare pentru x:");
         scanf("%f", &E.x);
     }
+    valideazaFunctia(E);
 }
 
 /**
@@ -407,76 +408,76 @@ float valoareFunctiei(functie E, float x)
                         switch (op[top2])
                         {
                         case '=':
-                            printf("Egalez : %f cu %f\n",x_1,x_2);
+                            printf("Egalez : %f cu %f\n", x_1, x_2);
                             valoareOperand = egal(x_1, x_2);
                             break;
 
                         case '#':
-                            printf("Inegalez : %f cu %f\n",x_1,x_2);
+                            printf("Inegalez : %f cu %f\n", x_1, x_2);
                             valoareOperand = diferit(x_1, x_2);
                             break;
 
                         case '<':
                             cout << "Maimic";
-                            printf("%f < %f\n",x_1,x_2);
+                            printf("%f < %f\n", x_1, x_2);
                             valoareOperand = maiMic(x_1, x_2);
                             break;
 
                         case '>':
-                            printf("%f > %f\n",x_1,x_2);
+                            printf("%f > %f\n", x_1, x_2);
                             valoareOperand = maiMare(x_1, x_2);
                             break;
 
                         case '+':
-                            printf("%f + %f\n",x_1,x_2);
+                            printf("%f + %f\n", x_1, x_2);
                             valoareOperand = Plus(x_1, x_2);
                             break;
 
                         case '-':
-                            printf("%f - %f\n",x_1,x_2);
+                            printf("%f - %f\n", x_1, x_2);
                             valoareOperand = Minus(x_1, x_2);
                             break;
 
                         case '*':
-                            printf("%f * %f\n",x_1,x_2);
+                            printf("%f * %f\n", x_1, x_2);
                             valoareOperand = inmultit(x_1, x_2);
                             break;
 
                         case '/':
-                            printf("%f / %f\n",x_1,x_2);
+                            printf("%f / %f\n", x_1, x_2);
                             valoareOperand = impartit(x_1, x_2);
                             break;
                         case '^':
-                            printf("%f^%f\n",x_1,x_2);
+                            printf("%f^%f\n", x_1, x_2);
                             valoareOperand = putere(x_1, x_2);
                             break;
                         case 's':
-                            printf("sin(%f)\n",x_2);
+                            printf("sin(%f)\n", x_2);
                             valoareOperand = sinus(x_2);
                             break;
 
                         case 'c':
-                            printf("cosin(%f)\n",x_2);
+                            printf("cosin(%f)\n", x_2);
                             valoareOperand = cosinus(x_2);
                             break;
 
                         case 'l':
-                            printf("log(%f)\n",x_2);
+                            printf("log(%f)\n", x_2);
                             valoareOperand = logaritm(x_2);
                             break;
 
                         case 'e':
-                            printf("exp(%f)\n",x_2);
+                            printf("exp(%f)\n", x_2);
                             valoareOperand = exponential(x_2);
                             break;
 
                         case 'a':
-                            printf("abs(%f)\n",x_2);
+                            printf("abs(%f)\n", x_2);
                             valoareOperand = modul(x_2);
                             break;
 
                         case 'r':
-                            printf("rad(%f)\n",x_2);
+                            printf("rad(%f)\n", x_2);
                             valoareOperand = radical(x_2);
                             break;
                         default:
@@ -544,7 +545,8 @@ float valoareFunctiei(functie E, float x)
 /**
  * Afiseaza greselile gasite in expresia functiei
 */
-void afiseazaGreseli(int greseli[2][10], int j){
+void afiseazaGreseli(int greseli[2][10], int j)
+{
     for (int i = 0; i < j; i++)
     {
         switch (greseli[1][i])
@@ -575,9 +577,10 @@ bool dupaParantezaEsteOperatorBinar(char *s, int i)
 {
     return (strchr(")", s[i]) && (strchr("0987654321.", s[i + 1]) || strchr("+-*/^", s[i - 1])) && s[i + 1] != '\0');
 }
+
 bool esteImpartireLa0(char *s, int i)
 {
-    return (strchr("/",s[i]) && strchr("x",s[i+1]) && E.x == 0);
+    return (strchr("/", s[i]) && strchr("x", s[i + 1]) && E.x == 0);
 }
 /**
  * Valideaza expresia functiei date
@@ -609,12 +612,16 @@ void valideazaFunctia(functie &E)
             greseli[1][nrGreseli] = EROARE_DUPA_PARANTEZA_NU_ESTE_OP_BINAR;
             nrGreseli++;
         }
-        else if (strchr("(", s[i])) 
+        else if (strchr("(", s[i]))
         {
             int sirulSeTerminaBrusc = 0;
-            for (int nrGreseli = i + 1; nrGreseli < n && !sirulSeTerminaBrusc; nrGreseli++)
+            for (int j = i + 1; j < n && !sirulSeTerminaBrusc; j++)
             {
-                if (strchr("x0987654321+-*^/", s[nrGreseli]) && s[nrGreseli + 1] == '\0')
+                if (strchr("x0987654321+-*^/", s[j]) && s[j + 1] == '\0')
+                {
+                    sirulSeTerminaBrusc = 1;
+                }
+                else if (strchr("+-*^/", s[j - 1]) && s[j] == ')')
                 {
                     sirulSeTerminaBrusc = 1;
                 }
@@ -626,25 +633,27 @@ void valideazaFunctia(functie &E)
                 greseli[1][nrGreseli] = EROARE_SIRUL_SE_TERMINA_BRUSC;
                 nrGreseli++;
             }
-        }else if(esteImpartireLa0(s,i)){
-                greseala = 1;
-                greseli[0][nrGreseli] = i;
-                greseli[1][nrGreseli] = EROARE_IMPARTIRE_LA_0;
-                nrGreseli++;
+        }
+        else if (esteImpartireLa0(s, i))
+        {
+            greseala = 1;
+            greseli[0][nrGreseli] = i;
+            greseli[1][nrGreseli] = EROARE_IMPARTIRE_LA_0;
+            nrGreseli++;
         }
     }
 
     if (greseala)
     {
-        afiseazaGreseli(greseli,nrGreseli);
+        afiseazaGreseli(greseli, nrGreseli);
         strcpy(E.expresie, "\0");
         citesteFunctie(E);
-        formeazaExpresia(E);
-    }else{
+    }
+    else
+    {
         cout << "EXPRESIE CORECTA";
     }
 }
-
 
 void afisare(functie E)
 {
