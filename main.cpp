@@ -10,6 +10,8 @@
 
 #include <iostream>
 #include <stdio.h>
+#include <conio.h>
+#include "grafica.h"
 #include "functions.h"
 using namespace std;
 #define MAX_STIVA 100
@@ -651,8 +653,17 @@ void afisare(functie E)
 
 int main()
 {
+  
+    window1 = initwindow(600,600,"evaluatorMatematic",true,true);
+    window2 = initwindow(600,600,"evaluatorMatematic",true,true);
+    int num1=40,num2=30;
+    Trasare30careuri(num1,num2,window1,window2);
+
     citesteFunctie(E);
     formeazaExpresia(E);
     afisare(E);
+
+    getch();
+    closegraph();
     return 0;
 }
