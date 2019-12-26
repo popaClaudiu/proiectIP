@@ -5,6 +5,7 @@
 #define infinit 10000000000
 #define epsilon 0.000000001
 #define pi 3.1415926
+#define e 2.71828
 
 /*
     Functii elementare din matematica
