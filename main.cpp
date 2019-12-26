@@ -16,6 +16,7 @@ using namespace std;
 #define EROARE_ESTE_O_LITERA_DUPA_O_CIFRA 2
 #define EROARE_DUPA_PARANTEZA_NU_ESTE_OP_BINAR 4
 #define EROARE_SIRUL_SE_TERMINA_BRUSC 3
+#define EROARE_IMPARTIRE_LA_0 5
 
 /**
 * O functie este declarata sub forma unei structuri de tip inregistrare
@@ -548,16 +549,17 @@ void afiseazaGreseli(int greseli[2][10], int j){
         switch (greseli[1][i])
         {
         case EROARE_ESTE_O_LITERA_DUPA_O_CIFRA:
-            printf("La pozitia %d. Dupa o cifra nu poate urma  o litera\n", greseli[0][i]);
+            printf("La pozitia %d. Dupa o cifra nu poate urma  o litera.\n", greseli[0][i]);
             break;
 
         case EROARE_SIRUL_SE_TERMINA_BRUSC:
-            printf("La pozitia %d. Dupa o ( sirul se termina brusc\n", greseli[0][i]);
+            printf("La pozitia %d. Dupa o ( sirul se termina brusc.\n", greseli[0][i]);
             break;
         case EROARE_DUPA_PARANTEZA_NU_ESTE_OP_BINAR:
-            printf("La pozitia %d. Dupa o ) nu poate urma un numar sau paranteza se termina brusc\n", greseli[0][i]);
+            printf("La pozitia %d. Dupa o ) nu poate urma un numar sau paranteza se termina brusc.\n", greseli[0][i]);
             break;
-        default:
+        case EROARE_IMPARTIRE_LA_0:
+            printf("La pozitia %d. Nu poti imparti la 0.\n", greseli[0][i]);
             break;
         }
     }
@@ -572,7 +574,10 @@ bool dupaParantezaEsteOperatorBinar(char *s, int i)
 {
     return (strchr(")", s[i]) && (strchr("0987654321.", s[i + 1]) || strchr("+-*/^", s[i - 1])) && s[i + 1] != '\0');
 }
-
+bool esteImpartireLa0(char *s, int i)
+{
+    return (strchr("/",s[i]) && strchr("x",s[i+1]) && E.x == 0);
+}
 /**
  * Valideaza expresia functiei date
 */
@@ -620,6 +625,11 @@ void valideazaFunctia(functie &E)
                 greseli[1][nrGreseli] = EROARE_SIRUL_SE_TERMINA_BRUSC;
                 nrGreseli++;
             }
+        }else if(esteImpartireLa0(s,i)){
+                greseala = 1;
+                greseli[0][nrGreseli] = i;
+                greseli[1][nrGreseli] = EROARE_IMPARTIRE_LA_0;
+                nrGreseli++;
         }
     }
 
