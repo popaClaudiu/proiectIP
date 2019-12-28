@@ -136,6 +136,11 @@ float cosinus(float x)
     return diferitDeInfinit(x) ? cos(x) : infinit;
 }
 
+float tangent(float x)
+{
+    return diferitDeInfinit(x) ? tan(x) : infinit;
+}
+
 float radical(float x)
 {
     if (!diferitDeInfinit(x) || (x < epsilon))
@@ -200,7 +205,7 @@ int prioritate(char caracter)
     {
         pr = 4;
     }
-    else if (strchr("cslear", caracter)) // functiile cos,sin,ln,exp,abs,rad
+    else if (strchr("csltear", caracter)) // functiile cos,sin,ln,exp,abs,rad,tan
     {
         pr = 5;
     }
@@ -227,7 +232,7 @@ int tipCaracter(char c){
     if(strchr("0123456789.",c)){
         tip = 1;
     }
-    else if(strchr("cosinlgexpabrd",c)){
+    else if(strchr("cosinlgexpabrdt",c)){
         tip = 2;
     }else{
         char operatori[]="()+-*/^Xq=#<>";
