@@ -666,5 +666,13 @@ int main()
     citesteFunctie(E);
     formeazaExpresia(E);
     afisare(E);
-    return 0;
+
+    char s;
+    printf("\n Evalueaza alta functie? (Y/N) ");
+    cin>>s;
+    if(s == 'Y'){
+        main();
+    }else{
+        return 0;
+    }
 }
