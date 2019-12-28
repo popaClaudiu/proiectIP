@@ -185,7 +185,7 @@ void transformaInVector(functie &E)
 
 /**
  * Evidentiaza variabilele din expresie
- * Pune 
+ * Pune
 */
 void evidentiazaVariabilele(functie &E)
 {
@@ -361,7 +361,7 @@ float valoareFunctiei(functie E, float x)
         else
         {
             if (strchr("qeX(", E.cuvinte[i][0]) && E.cuvinte[i][0] != ' ')
-            {                
+            {
                 switch (E.cuvinte[i][0])
                 {
                 case 'q':
@@ -678,7 +678,6 @@ int main()
 
     afisare(E);
 
-
    // window1=initwindow(600,600,"evaluatorMatematic",true,true);
 
    /* cin>>k;
@@ -707,4 +706,14 @@ int main()
     getch();
     closegraph();
     return 0;
+
+    char s;
+    printf("\n Evalueaza alta functie? (Y/N) ");
+    cin>>s;
+    if(s == 'Y'){
+        main();
+    }else{
+        return 0;
+    }
+
 }
