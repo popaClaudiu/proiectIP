@@ -1,6 +1,6 @@
 #include <math.h>
 #include <string.h>
-#include<iostream>
+#include <iostream>
 #include <stdlib.h>
 #define infinit 10000000000
 #define epsilon 0.000000001
@@ -97,23 +97,25 @@ float putere(float x, float y)
         return 1;
     else
     {
-        
+
         if (!diferitDeInfinit(x) || !diferitDeInfinit(y))
             return infinit;
         else if (y == int(y))
-        {            
-            std::cout<<"incepem sa inmultim"<<"\n";
+        {
+            std::cout << "incepem sa inmultim"
+                      << "\n";
             yi = trunc(y);
             p = 1;
             for (i = 1; i <= (yi / 2); i++)
             {
                 p *= x;
                 p *= p;
-                std::cout<<"p="<<p;
+                std::cout << "p=" << p;
             }
-            if (!estePar(yi)){
-                p *= x; 
-                std::cout<<"p="<<p;
+            if (!estePar(yi))
+            {
+                p *= x;
+                std::cout << "p=" << p;
             }
 
             return p;
@@ -134,6 +136,11 @@ float sinus(float x)
 float cosinus(float x)
 {
     return diferitDeInfinit(x) ? cos(x) : infinit;
+}
+
+float tangent(float x)
+{
+    return diferitDeInfinit(x) ? tan(x) : infinit;
 }
 
 float radical(float x)
@@ -167,7 +174,7 @@ bool maiMare(float x, float y)
 }
 
 /*
-    Functiile programului
+*  FUNCTII ALE PROGRAMULUI
 */
 
 /*
@@ -200,7 +207,7 @@ int prioritate(char caracter)
     {
         pr = 4;
     }
-    else if (strchr("cslear", caracter)) // functiile cos,sin,ln,exp,abs,rad
+    else if (strchr("csltear", caracter)) // functiile cos,sin,ln,exp,abs,rad,tan
     {
         pr = 5;
     }
@@ -220,20 +227,26 @@ bool esteIntreg(float v)
     X = variabila x
     tip = 100 pentru orice alt caracter aflat in expresie
 */
+int tipCaracter(char c)
+{
 
-int tipCaracter(char c){
-    
-    int tip = 100; 
-    if(strchr("0123456789.",c)){
+    int tip = 100;
+    if (strchr("0123456789.", c))
+    {
         tip = 1;
     }
-    else if(strchr("cosinlgexpabrd",c)){
+    else if (strchr("cosinlgexpabrdt", c))
+    {
         tip = 2;
-    }else{
-        char operatori[]="()+-*/^Xq=#<>";
+    }
+    else
+    {
+        char operatori[] = "()+-*/^Xq=#<>";
         int i = 0;
-        while(operatori[i]){
-            if(c == operatori[i]){
+        while (operatori[i])
+        {
+            if (c == operatori[i])
+            {
                 tip = 3 + i;
                 break;
             }
@@ -246,24 +259,47 @@ int tipCaracter(char c){
 
 bool esteNumar(char s)
 {
-    if(strchr("0123456789", s)){
-        return true;
-    }
-    return false;
+    return (strchr("0123456789", s)) ? true : false;
 }
 
-float valoareaOperandului(char* s, int& cod)
+float valoareaOperandului(char *s, int &cod)
 {
     char s1[255];
-    int i=0,j=0;
+    int i = 0, j = 0;
 
-    for(i=0;i<strlen(s);i++){
-        if(strchr("0987654321.",s[i])){
+    for (i = 0; i < strlen(s); i++)
+    {
+        if (strchr("0987654321.", s[i]))
+        {
             s1[j] = s[i];
             j++;
         }
     }
-    
-    cod =  atof(s1);
+
+    cod = atof(s1);
     return atof(s1);
+}
+
+/**
+ * Verifica daca caracterul trimis este o variabila
+*/
+bool esteVariabila(char caracter)
+{
+    return (caracter == 'x');
+}
+/**
+ * Verifica daca caracterul trimis nu face parte din sirul: exp
+*/
+bool nuEsteOperatorulExponent(char *expresie, int i)
+{
+    return (expresie[i - 1] != 'e' && expresie[i + 1] != 'p');
+}
+/**
+ * Deplaseaza sirul de la o pozitie data pana la o pozitie data
+*/
+void desplaseazaSirul(char* sir, int start, int stop){
+    for (int i = start; i > stop; i--)
+    {
+        sir[i] = sir[i - 1];
+    }
 }
