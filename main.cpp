@@ -9,10 +9,12 @@
 */
 
 #include <iostream>
+#include <cstring>
 #include <stdio.h>
 #include <conio.h>
 #include "grafica.h"
 #include "functions.h"
+
 using namespace std;
 #define MAX_STIVA 100
 #define EROARE_ESTE_O_LITERA_DUPA_O_CIFRA 2
@@ -653,16 +655,18 @@ void afisare(functie E)
 
 int main()
 {
-
-    int window1,window2;
+    int window1,i;
     /*citesteFuntie(E);
     afiseazaCuvinte();
 
     afisare(E);*/
     window1=initwindow(600,600,"evaluatorMatematic",true,true);
-    window2=initwindow(600,600,"evaluatorMatematic",true,true);
-    int num1=40,num2=30;
-    Trasare30careuri(num1,num2,window1,window2);
+    char key,c[101];
+
+    cin>>c;
+
+    cinTastatura(window1,c);
+
     getch();
     closegraph();
     return 0;
