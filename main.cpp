@@ -32,15 +32,14 @@ struct record
     char cuvinte[100][10];
     int lungime;
     float x;
-    // float a, b;
-    // int n;
 };
-
 typedef record functie;
 functie E;
+
 void citesteFunctie(functie &E);
 void formeazaExpresia(functie &E);
 void valideazaFunctia(functie &E);
+
 void afiseazaCuvinte()
 {
     for (int i = 0; i < E.lungime; i++)
@@ -58,7 +57,10 @@ void afiseazaStivaOp(char op[], int top)
     }
 }
 
-void trim(char *s)
+/**
+ * Scoate spatiile dintr-un sir de caractere
+*/
+void trimWhiteSpaces(char *s)
 {
     char a[10];
     int j = 0;
@@ -145,7 +147,7 @@ void Copy(char *s, char sir[255], int start, int stop)
 void Delete(char *sir, int start, int stop)
 {
     strcpy(sir, sir + start + stop + 1);
-    cout << "Expresia dupa stergere:" << sir << endl;
+    printf("Expresia dupa stergere: %s \n",sir);
     afiseazaCuvinte();
 }
 
@@ -166,8 +168,7 @@ void transformaInVector(functie &E)
     {
         p = Pos(' ', sir);
         Copy(E.cuvinte[lung], sir, 0, p);
-        lung++;
-        E.lungime = lung;
+        E.lungime = ++lung;
         Delete(sir, 0, p);
     }
 
@@ -177,25 +178,26 @@ void transformaInVector(functie &E)
     }
 }
 
+/**
+ * Evidentiaza variabilele din expresie
+ * Pune 
+*/
 void evidentiazaVariabilele(functie &E)
 {
-    cout << "Evidentiez variabile";
-    int i;
-    if (E.expresie[0] == 'x')
+    printf("Evidentiez Variabilele");
+    int i, n = strlen(E.expresie);
+    if (esteVariabila(E.expresie[0]))
         E.expresie[0] = 'X';
-    if (E.expresie[strlen(E.expresie)] == 'x')
-        E.expresie[strlen(E.expresie)] = 'X';
+    if (esteVariabila(E.expresie[n]))
+        E.expresie[n] = 'X';
 
-    for (i = 0; i < strlen(E.expresie); i++)
+    for (i = 1; i < n; i++)
     {
-        if (E.expresie[i] == 'x')
+        if (esteVariabila(E.expresie[i]))
         {
-            if (i < strlen(E.expresie) && i > 1)
+            if (nuEsteOperatorulExponent(E.expresie, i))
             {
-                if (E.expresie[i - 1] != 'e' && E.expresie[i + 1] != 'p')
-                {
-                    E.expresie[i] = 'X';
-                }
+                E.expresie[i] = 'X';
             }
         }
     }
@@ -208,7 +210,7 @@ void evidentiazaVariabilele(functie &E)
 */
 void puneZerouriInExpresie(functie &E)
 {
-    cout << "zerori" << endl;
+    printf("Pun zerouri\n");
     char s[255];
     int n;
     strcpy(s, E.expresie);
@@ -216,10 +218,7 @@ void puneZerouriInExpresie(functie &E)
 
     if (s[0] == '+' || s[0] == '-')
     {
-        for (int i = n + 1; i > 0; i--)
-        {
-            s[i] = s[i - 1];
-        }
+        desplaseazaSirul(s, n+1, 0);
         s[0] = '0';
     }
     else if ((s[n - 1] == '+' || s[n - 1] == '-') && s[n] == '\0')
@@ -229,67 +228,65 @@ void puneZerouriInExpresie(functie &E)
     }
     else
     {
-        cout << "Expresia:" << s;
+        printf("Expresia: %s\n", s);
         int k = 0, i;
         for (i = 0; i < n; i++)
         {
             if ((s[i] == ')' && strchr("+", s[i - 1]) && s[i - 1] != '\0'))
             {
-                cout << "s[i]=" << s[i] << endl;
-                cout << "Expresie +):" << i << endl;
-                for (k = n; k > i; k--)
-                {
-                    s[k] = s[k - 1];
-                }
+                printf("s[%d]=%c\n", i, s[i]);
+                printf("Expresie de tipul +) %d\n", i);
+                desplaseazaSirul(s, n, i);
                 s[i] = '0';
-
-                cout << "s=" << s;
+                printf("s=%s\n", s);
             }
             else if (s[i] == '(' && strchr("+", s[i + 1]) && s[i + 1] != '\0')
             {
-                cout << "s[i]=" << s[i] << endl;
-                cout << "Expresie (+:" << i << endl;
-                for (k = n; k > i; k--)
-                {
-                    s[k] = s[k - 1];
-                }
+                printf("s[%i]=%c\n", i, s[i]);
+                printf("Expresie de tipul (+ %d\n", i);
+                desplaseazaSirul(s, n, i);
                 s[++i] = '0';
-
-                cout << "s=" << s;
+                printf("s=%s\n", s);
             }
         }
     }
-
     strcpy(E.expresie, s);
-    cout << "Expresia:" << E.expresie << endl;
+    printf("Expresia: %s\n", E.expresie);
 }
 
+bool esteOperatie(int t1, int t2, int i)
+{
+    return (!((5 <= t1 && t1 > 10) && (t2 == 1)) || (strchr("=#<>", E.expresie[i - 2])));
+}
+
+bool seAflaInParanteza(int t1, int t2, int i)
+{
+    return ((t1 != t2) || ((t1 == tipCaracter('(')) && (t2 == t1)) || ((t1 == tipCaracter(')')) && (t2 == t1)));
+}
 /*
 *  Pune spatii in expresie intre caractere de tipuri diferite
 */
-
 void puneSpatiiInExpresie(functie &E)
 {
-    int i, t1, t2;
+    int pozitie, t1, t2;
 
     puneZerouriInExpresie(E);
     evidentiazaVariabilele(E);
 
-    i = 0;
-    while (i < strlen(E.expresie) && strlen(E.expresie) < 256)
+    pozitie = 0;
+    while (pozitie < strlen(E.expresie) && strlen(E.expresie) < 256)
     {
-        t1 = tipCaracter(E.expresie[i]);
-        t2 = tipCaracter(E.expresie[i + 1]);
-        if (!((5 <= t1 && t1 > 10) && (t2 == 1)) || (strchr("=#<>", E.expresie[i - 2])))
+        t1 = tipCaracter(E.expresie[pozitie]);
+        t2 = tipCaracter(E.expresie[pozitie + 1]);
+        if (esteOperatie(t1, t2, pozitie))
         {
-
-            if ((t1 != t2) || ((t1 == tipCaracter('(')) && (t2 == t1)) || ((t1 == tipCaracter(')')) && (t2 == t1)))
+            if (seAflaInParanteza(t1, t2, pozitie))
             {
-                insereazaSpatiu(E, i + 1);
-                i++;
+                insereazaSpatiu(E, pozitie + 1);
+                pozitie++;
             }
         }
-        i++;
+        pozitie++;
     }
 }
 
@@ -299,9 +296,9 @@ void formeazaExpresia(functie &E)
     puneSpatiiInExpresie(E);
     transformaInVector(E);
 
-    for (int i = 0; i < E.lungime; i++) // Scot spatiile din fiecare cuvant
+    for (int i = 0; i < E.lungime; i++)
     {
-        trim(E.cuvinte[i]);
+        trimWhiteSpaces(E.cuvinte[i]);
     }
 }
 
@@ -348,37 +345,34 @@ float valoareFunctiei(functie E, float x)
     while (i < E.lungime && top2 > 0)
     {
         i++;
-        cout << endl
-             << "E.cuv=" << E.cuvinte[i] << endl;
+        printf("E.cuv=%s\n", E.cuvinte[i]);
         if (esteNumar(*E.cuvinte[i]))
         {
             top1++;
             valoareOperand = valoareaOperandului(E.cuvinte[i], cod);
             operand[top1] = valoareOperand;
-            cout << "In varful stivei am adaugat constanta:" << operand[top1] << endl;
+            printf("In varful stivei am adaugat constanta: %f \n",operand[top1]);
         }
         else
         {
-            cout << "Am intrat in else" << endl;
             if (strchr("qeX(", E.cuvinte[i][0]) && E.cuvinte[i][0] != ' ')
-            {
-                cout << "Am intrat in if2" << endl;
+            {                
                 switch (E.cuvinte[i][0])
                 {
                 case 'q':
                     top1++;
                     operand[top1] = pi;
-                    cout << "In varful stivei PI este :" << operand[top1] << endl;
+                    printf("In varful stivei este PI: %f\n",operand[top1]);
                     break;
                 case 'e':
                     top1++;
                     operand[top1] = e;
-                    cout << "In varful stivei este constanta Euler :" << operand[top1] << endl;
+                    printf("In varful stivei este constanta Euler: %f\n",operand[top1]);
                     break;
                 case 'X':
                     top1++;
                     operand[top1] = x;
-                    cout << "In varful stivei X este:" << operand[top1] << endl;
+                    printf("In varful stivei X este: %f\n",operand[top1]);
                     break;
                 case '(':
                     top2++;
@@ -390,19 +384,16 @@ float valoareFunctiei(functie E, float x)
             }
             else
             {
-                cout << "Am intrat in else 2" << endl;
-                cout << "Operatorul din varful stivei:" << op[top2] << endl;
-                cout << "Cuvantul:" << E.cuvinte[i][0] << endl;
-
+                printf("In varful stivei operatorilor este: %c\n",op[top2]);
+                printf("Cuvantul:%c\n", E.cuvinte[i][0]);
                 while (
                     top2 > 0 && (!strchr("()", op[top2])) &&
                     (prioritate(op[top2]) >= prioritate(E.cuvinte[i][0])))
                 {
-                    cout << "Am intrat in while" << endl;
                     if (top1 > 1)
                         x_1 = operand[top1 - 1];
                     x_2 = operand[top1];
-                    cout << "x_2=" << x_2 << endl;
+                    printf("x_2=%f\n", x_2);
                     if (strchr("=#<>+-/*^scleart", op[top2]))
                     {
                         switch (op[top2])
@@ -491,35 +482,32 @@ float valoareFunctiei(functie E, float x)
 
                         if (strchr("+-^*/><=", op[top2]) && top1 > 1)
                         {
-                            cout << "Am intrat in if 3. Scad din stiva operatorilor" << endl;
+                            printf("Scad din stiva operanzilor\n");
                             top1--;
                         }
                         if (strchr("=#<>+-/*^scleart", op[top2]) && top1 > 0)
                         {
-                            cout << "Am intrat in if 4. Scad din stiva operanzilor" << endl;
+                            printf( "Scad din stiva operatorilor\n");
                             operand[top1] = valoareOperand;
-                            cout << endl
-                                 << "In varful stivei operanzilor este:" << operand[top1] << endl;
+                            printf("\n In varful stivei operanzilor este:%f\n",operand[top1]);
                             top2--;
                         }
                     }
                 }
                 if (top2 > 0 && !esteNumar(E.cuvinte[i][0]))
                 {
-                    cout << endl
-                         << "Top2>0" << endl;
-                    cout << "Ecuv:" << E.cuvinte[i][0];
-                    cout << endl;
+                    printf("Top2 > 0");
+                    printf("E.cuv:%c \n", E.cuvinte[i][0]);
                     if (op[top2] != '(' || E.cuvinte[i][0] != ')')
                     {
-                        cout << "Adaug in stiva operatorilor" << endl;
+                        printf("Adaug in stiva operatorilor\n");
                         top2++;
                         op[top2] = E.cuvinte[i][0];
                         afiseazaStivaOp(op, top2);
                     }
                     else
                     {
-                        cout << "Scad din stiva operatorilor" << endl;
+                        printf("Scad din stiva operatorilor\n");
                         top2--;
                         afiseazaStivaOp(op, top2);
                     }
@@ -530,14 +518,13 @@ float valoareFunctiei(functie E, float x)
 
     if (top2 == 0)
     {
-        cout << "Returnez:" << operand[1] << endl;
+        printf("Returnez: %f\n", operand[1]);
         return operand[1];
     }
     else
     {
-        cout << "Varful stivei operanzilor:" << operand[1] << endl;
-        cout << "In varful stivei top2 este:" << op[top2] << " top2=" << top2 << endl;
-
+        printf("Varful stivei operanzilor:%f\n", operand[1]);
+        printf("In varful stivei operatorilor top2 este:%d. top2=%d\n",op[top2] ,top2);
         for (int i = 0; i <= top2; i++)
         {
             cout << op[top2] << endl;
@@ -656,7 +643,7 @@ void valideazaFunctia(functie &E)
     }
     else
     {
-        cout << "EXPRESIE CORECTA";
+        printf("EXPRESIE CORECTA \n");
     }
 }
 
