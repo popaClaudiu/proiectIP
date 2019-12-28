@@ -408,7 +408,7 @@ float valoareFunctiei(functie E, float x)
                         x_1 = operand[top1 - 1];
                     x_2 = operand[top1];
                     cout << "x_2=" << x_2 << endl;
-                    if (strchr("=#<>+-/*^sclear", op[top2]))
+                    if (strchr("=#<>+-/*^scleart", op[top2]))
                     {
                         switch (op[top2])
                         {
@@ -485,6 +485,11 @@ float valoareFunctiei(functie E, float x)
                             printf("rad(%f)\n", x_2);
                             valoareOperand = radical(x_2);
                             break;
+
+                        case 't':
+                            printf("tan(%f)\n", x_2);
+                            valoareOperand = tangent(x_2);
+                            break;
                         default:
                             break;
                         }
@@ -494,7 +499,7 @@ float valoareFunctiei(functie E, float x)
                             cout << "Am intrat in if 3. Scad din stiva operatorilor" << endl;
                             top1--;
                         }
-                        if (strchr("=#<>+-/*^sclear", op[top2]) && top1 > 0)
+                        if (strchr("=#<>+-/*^scleart", op[top2]) && top1 > 0)
                         {
                             cout << "Am intrat in if 4. Scad din stiva operanzilor" << endl;
                             operand[top1] = valoareOperand;
