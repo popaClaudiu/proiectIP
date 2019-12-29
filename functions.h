@@ -97,11 +97,11 @@ float putere(float x, float y)
         return 1;
     else
     {
-        
+
         if (!diferitDeInfinit(x) || !diferitDeInfinit(y))
             return infinit;
         else if (y == int(y))
-        {            
+        {
             std::cout<<"incepem sa inmultim"<<"\n";
             yi = trunc(y);
             p = 1;
@@ -112,7 +112,7 @@ float putere(float x, float y)
                 std::cout<<"p="<<p;
             }
             if (!estePar(yi)){
-                p *= x; 
+                p *= x;
                 std::cout<<"p="<<p;
             }
 
@@ -222,8 +222,8 @@ bool esteIntreg(float v)
 */
 
 int tipCaracter(char c){
-    
-    int tip = 100; 
+
+    int tip = 100;
     if(strchr("0123456789.",c)){
         tip = 1;
     }
@@ -263,7 +263,7 @@ float valoareaOperandului(char* s, int& cod)
             j++;
         }
     }
-    
+
     cod =  atof(s1);
     return atof(s1);
 }
