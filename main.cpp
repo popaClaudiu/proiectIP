@@ -606,8 +606,8 @@ void valideazaFunctia(functie &E)
         }
         else if (strchr("(", s[i]))
         {
-            int sirulSeTerminaBrusc = 0;
-            for (int j = i + 1; j < n && !sirulSeTerminaBrusc; j++)
+            int sirulSeTerminaBrusc = 0, j;
+            for (j = i + 1; j < n && !sirulSeTerminaBrusc; j++)
             {
                 if (strchr("x0987654321+-*^/", s[j]) && s[j + 1] == '\0')
                 {
@@ -617,11 +617,14 @@ void valideazaFunctia(functie &E)
                 {
                     sirulSeTerminaBrusc = 1;
                 }
+                if(s[j] == ')'){
+                    break;
+                }
             }
             if (sirulSeTerminaBrusc)
             {
                 greseala = 1;
-                greseli[0][nrGreseli] = i;
+                greseli[0][nrGreseli] = j--;
                 greseli[1][nrGreseli] = EROARE_SIRUL_SE_TERMINA_BRUSC;
                 nrGreseli++;
             }
