@@ -13,7 +13,7 @@ struct punct
 {
     int x,y;
 };
-
+void pornesteProgramul(int window);
 void patrat(int x,int y,int lat)
 {
     line(x-lat/2,y-lat/2,x-lat/2,y+lat/2);
@@ -5327,14 +5327,48 @@ void citesteString(int window1)
     }
 
 }
-void incepeTutorialul(){
 
+void incepeTutorialul(int window){
+    readimagefile("starting_menu.jpg",100,100,500,500);
+    readimagefile("right-arrow.jpg",510,250,600,300);
+    readimagefile("exit.jpg", 20,10,40,40);
+
+    while(1){
+
+        if(ismouseclick(WM_LBUTTONDOWN))
+        {
+            cout<<"Mouse Clicked";
+            int x = mousex(), y = mousey();
+            clearmouseclick(WM_LBUTTONDOWN);
+            cout<<"x="<<x<<' '<<"y="<<y<<endl;
+            if(x>510 && x<600 && y > 250 && y < 300){
+                setfillstyle(SOLID_FILL,BLACK);
+                bar(0,0,600,600);
+                readimagefile("evaluator.jpg",100,100,500,500);
+                readimagefile("left-arrow.jpg",0,250,100,300);
+                while(1){
+                    if(ismouseclick(WM_LBUTTONDOWN))
+                    {
+                        int x = mousex(), y = mousey();
+                        clearmouseclick(WM_LBUTTONDOWN);
+                        if(x>0 && x<100 && y > 250 && y < 300){
+                                setfillstyle(SOLID_FILL,BLACK);
+                                bar(0,0,600,600);
+                                incepeTutorialul(window);
+                        }
+                    }
+                }
+            }else if(x>20 && x<40 && y>10 && y<40){
+                setfillstyle(SOLID_FILL,BLACK);
+                bar(0,0,600,600);
+                pornesteProgramul(window);
+            }
+        }
+    }
 }
 
-
-void pornesteProgramul(int window1)
-{
-    int width, height;
+void deseneazaEcranulDeStart(){
+  int width, height;
     width = getmaxwidth();
     height = getmaxheight();
 
@@ -5354,27 +5388,51 @@ void pornesteProgramul(int window1)
 
     settextstyle(BOLD_FONT,HORIZ_DIR,1);
     outtextxy(30,500, "Proiect realizat de: Claudiu Popa si Victor Rosca");
+}
 
+
+void pornesteProgramul(int window)
+{
+    deseneazaEcranulDeStart();
     while(1)
     {
-
+        int x = mousex(), y = mousey();
         if(ismouseclick(WM_LBUTTONDOWN))
         {
-            cout<<"Mouse Clicked";
-            int x = mousex(), y = mousey();
+            x = mousex(), y = mousey();
             clearmouseclick(WM_LBUTTONDOWN);
-            cout<<"x="<<x<<' '<<"y="<<y<<endl;
-            if( x > 200 && x < 400 && y > 200 && y < 250){
+            if(x > 200 && x < 400 && y > 200 && y < 250){
                 setfillstyle(SOLID_FILL,BLACK);
                 bar(0,0,600,600);
-                citesteString(window1);
-            }else if( x > 200 && x < 400 && y > 300 && y < 350){
-                cout<<"TUTORIAL";
+                setcolor(WHITE);
+                citesteString(window);
+            }else if( x > 200 && x < 400 && y > 300 && y < 350)
+            {
                 setfillstyle(SOLID_FILL,BLACK);
                 bar(0,0,600,600);
-                incepeTutorialul();
+                incepeTutorialul(window);
             }
         }
+
+            if(x > 200 && x < 400 && y > 200 && y < 250){
+                setcolor(BLUE);
+                setlinestyle(SOLID_LINE,USERBIT_LINE,THICK_WIDTH);
+                rectangle(200,200,400,250);
+
+                settextstyle(BOLD_FONT,HORIZ_DIR,3);
+                outtextxy(240,215,"Evalueaza");
+            }else if( x > 200 && x < 400 && y > 300 && y < 350){
+                setcolor(BLUE);
+                setlinestyle(SOLID_LINE,USERBIT_LINE,THICK_WIDTH);
+                rectangle(200,300,400,350);
+
+                settextstyle(BOLD_FONT,HORIZ_DIR,3);
+                outtextxy(240,315,"Tutorial");
+
+            }else{
+                setcolor(WHITE);
+                deseneazaEcranulDeStart();
+            }
     }
 
 }
