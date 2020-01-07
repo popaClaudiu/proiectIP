@@ -1,4 +1,5 @@
-#include <iostream>
+#include "functions.h"
+#include "structure.h"
 #include <graphics.h>
 #include <winbgim.h>
 #include <cstring>
@@ -5317,10 +5318,13 @@ void citesteString(int window1)
                     cinTastatura2(window1,c2,nr3,lungimeSir2);
                 }
             }
-            /*if(apasatAfis2>0)
+            if(apasatAfis2>0)
             {
-
-            }*/
+                strcpy(E.expresie,c);
+                formeazaExpresia(E);
+                float result = valoareFunctiei(E,0);
+                cout<<result;
+            }
         }
         delay(5);
     }

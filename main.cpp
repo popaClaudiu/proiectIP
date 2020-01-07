@@ -8,17 +8,15 @@
  * #############################
 */
 
-#include "functions.h"
-#include "structure.h"
+#include "grafica.h"
 
 char c2[10000],k;
-
 int main()
 {
     int window1,i;
     char c[10000],result[100];
 
-   // window1=initwindow(600,600,"evaluatorMatematic",true,true);
+   window1=initwindow(600,600,"evaluatorMatematic",true,true);
 
    /* cin>>k;
 
@@ -32,7 +30,7 @@ int main()
         citireX2(window1,k,i);*/
     //cinTastatura(window1,c);
 
-    //citesteString(window1);
+    citesteString(window1);
 
     /*settextstyle(BOLD_FONT,HORIZ_DIR,2);
     outtextxy(150,151,"Citeste Necunoscuta X");
