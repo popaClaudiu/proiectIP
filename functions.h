@@ -2,6 +2,7 @@
 #include <string.h>
 #include <iostream>
 #include <stdlib.h>
+#include <string>
 #define infinit 10000000000
 #define epsilon 0.000000001
 #define pi 3.1415926

@@ -30,7 +30,9 @@ int main()
         citireX2(window1,k,i);*/
     //cinTastatura(window1,c);
 
-    citesteString(window1);
+    pornesteProgramul(window1);
+
+    // citesteString(window1);
 
     /*settextstyle(BOLD_FONT,HORIZ_DIR,2);
     outtextxy(150,151,"Citeste Necunoscuta X");

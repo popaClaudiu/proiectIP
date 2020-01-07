@@ -2047,6 +2047,40 @@ void Trasare30careuri(int window1,char key,int c1)
     //page=1-page;
 }
 
+void pornesteProgramul(int window1)
+{
+    int width, height;
+    width = getmaxwidth();
+    height = getmaxheight();
+
+    settextstyle(BOLD_FONT,HORIZ_DIR,3);
+    outtextxy(170,100,"Evaluator Matematic");
+
+    setlinestyle(SOLID_LINE,USERBIT_LINE,THICK_WIDTH);
+    rectangle(200,200,400,250);
+    settextstyle(BOLD_FONT,HORIZ_DIR,3);
+    outtextxy(240,215,"Evalueaza");
+
+
+    setlinestyle(SOLID_LINE,USERBIT_LINE,THICK_WIDTH);
+    rectangle(200,300,400,350);
+    settextstyle(BOLD_FONT,HORIZ_DIR,3);
+    outtextxy(240,315,"Tutorial");
+
+    settextstyle(BOLD_FONT,HORIZ_DIR,1);
+    outtextxy(30,500, "Proiect realizat de: Claudiu Popa si Victor Rosca");
+
+    if(ismouseclick(WM_LBUTTONDOWN))
+    {
+        int x = getx(), y = gety();
+        if( x > 200 && x < 400 && y > 200 && y < 250){
+            cout<<"Evalueaza"<<endl;
+        }
+
+    }
+
+}
+
 void cinTastatura(int window1,char c[10001],int nr2,int lungimeSir)
 {
     int i,numarCasuta=0;
@@ -5326,56 +5360,5 @@ void citesteString(int window1)
         delay(5);
     }
 
-}
-void incepeTutorialul(){
 
 }
-
-
-void pornesteProgramul(int window1)
-{
-    int width, height;
-    width = getmaxwidth();
-    height = getmaxheight();
-
-    settextstyle(BOLD_FONT,HORIZ_DIR,3);
-    outtextxy(170,100,"Evaluator Matematic");
-
-    setlinestyle(SOLID_LINE,USERBIT_LINE,THICK_WIDTH);
-    rectangle(200,200,400,250);
-    settextstyle(BOLD_FONT,HORIZ_DIR,3);
-    outtextxy(240,215,"Evalueaza");
-
-
-    setlinestyle(SOLID_LINE,USERBIT_LINE,THICK_WIDTH);
-    rectangle(200,300,400,350);
-    settextstyle(BOLD_FONT,HORIZ_DIR,3);
-    outtextxy(240,315,"Tutorial");
-
-    settextstyle(BOLD_FONT,HORIZ_DIR,1);
-    outtextxy(30,500, "Proiect realizat de: Claudiu Popa si Victor Rosca");
-
-    while(1)
-    {
-
-        if(ismouseclick(WM_LBUTTONDOWN))
-        {
-            cout<<"Mouse Clicked";
-            int x = mousex(), y = mousey();
-            clearmouseclick(WM_LBUTTONDOWN);
-            cout<<"x="<<x<<' '<<"y="<<y<<endl;
-            if( x > 200 && x < 400 && y > 200 && y < 250){
-                setfillstyle(SOLID_FILL,BLACK);
-                bar(0,0,600,600);
-                citesteString(window1);
-            }else if( x > 200 && x < 400 && y > 300 && y < 350){
-                cout<<"TUTORIAL";
-                setfillstyle(SOLID_FILL,BLACK);
-                bar(0,0,600,600);
-                incepeTutorialul();
-            }
-        }
-    }
-
-}
-
