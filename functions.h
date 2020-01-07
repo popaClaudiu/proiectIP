@@ -85,7 +85,6 @@ float impartit(float x, float y)
 {
     return modul(y) > epsilon ? x / y : infinit;
 }
-
 float putere(float x, float y)
 {
     int i, yi;
@@ -102,38 +101,29 @@ float putere(float x, float y)
             return infinit;
         else if (y == int(y))
         {
-<<<<<<< HEAD
-            std::cout<<"incepem sa inmultim"<<"\n";
-=======
             std::cout << "incepem sa inmultim"
                       << "\n";
->>>>>>> Refactoring to some functions
             yi = trunc(y);
+            std::cout<<x<<" si "<<yi<<"\n";
             p = 1;
             for (i = 1; i <= (yi / 2); i++)
             {
                 p *= x;
-                p *= p;
+                p *= x;
                 std::cout << "p=" << p;
             }
-<<<<<<< HEAD
-            if (!estePar(yi)){
-                p *= x;
-                std::cout<<"p="<<p;
-=======
+
             if (!estePar(yi))
             {
                 p *= x;
-                std::cout << "p=" << p;
->>>>>>> Refactoring to some functions
+                std::cout <<"Impar p=" << p;
             }
 
             return p;
         }
         else
         {
-            return exponential(
-                inmultit(y, logaritm(x)));
+            return exponential(inmultit(y, logaritm(x)));
         }
     }
 }
@@ -239,17 +229,9 @@ bool esteIntreg(float v)
 */
 int tipCaracter(char c)
 {
-
-<<<<<<< HEAD
-int tipCaracter(char c){
-
-    int tip = 100;
-    if(strchr("0123456789.",c)){
-=======
     int tip = 100;
     if (strchr("0123456789.", c))
     {
->>>>>>> Refactoring to some functions
         tip = 1;
     }
     else if (strchr("cosinlgexpabrdt", c))
@@ -320,4 +302,3 @@ void desplaseazaSirul(char* sir, int start, int stop){
         sir[i] = sir[i - 1];
     }
 }
-

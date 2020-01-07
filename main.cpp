@@ -14,7 +14,7 @@
 #include <conio.h>
 #include "grafica.h"
 #include "functions.h"
-
+#include "structure.h"
 using namespace std;
 #define MAX_STIVA 100
 #define EROARE_ESTE_O_LITERA_DUPA_O_CIFRA 2
@@ -22,23 +22,6 @@ using namespace std;
 #define EROARE_SIRUL_SE_TERMINA_BRUSC 3
 #define EROARE_IMPARTIRE_LA_0 5
 
-/**
-* O functie este declarata sub forma unei structuri de tip inregistrare
-*  expresie = expresia functiei
-*  cuvinte = contine toate cuvintele ce formeaza expresia matematica
-*  lungime = lungimea efectiva a vectorului
-*  a,b = un interval de evaluare a functiei
-*  n = numarul de puncte de evaluare
-*/
-
-struct record
-{
-    char expresie[256];
-    char cuvinte[100][10];
-    int lungime;
-    float x;
-};
-typedef record functie;
 functie E;
 
 void citesteFunctie(functie &E);
@@ -185,7 +168,6 @@ void transformaInVector(functie &E)
 
 /**
  * Evidentiaza variabilele din expresie
- * Pune
 */
 void evidentiazaVariabilele(functie &E)
 {
@@ -268,6 +250,16 @@ bool seAflaInParanteza(int t1, int t2, int i)
 {
     return ((t1 != t2) || ((t1 == tipCaracter('(')) && (t2 == t1)) || ((t1 == tipCaracter(')')) && (t2 == t1)));
 }
+
+bool esteOperatie(int t1, int t2, int i)
+{
+    return (!((5 <= t1 && t1 > 10) && (t2 == 1)) || (strchr("=#<>", E.expresie[i - 2])));
+}
+
+bool seAflaInParanteza(int t1, int t2, int i)
+{
+    return ((t1 != t2) || ((t1 == tipCaracter('(')) && (t2 == t1)) || ((t1 == tipCaracter(')')) && (t2 == t1)));
+}
 /*
 *  Pune spatii in expresie intre caractere de tipuri diferite
 */
@@ -295,6 +287,9 @@ void puneSpatiiInExpresie(functie &E)
     }
 }
 
+/**
+ * Pregateste functia pentru evaluare
+*/
 void formeazaExpresia(functie &E)
 {
     puneZerouriInExpresie(E);
@@ -360,7 +355,7 @@ float valoareFunctiei(functie E, float x)
         }
         else
         {
-            if (strchr("qeX(", E.cuvinte[i][0]) && E.cuvinte[i][0] != ' ')
+            if (strchr("qeX(", E.cuvinte[i][0]) && E.cuvinte[i][0] != ' ' && E.cuvinte[i][1] !='x')
             {
                 switch (E.cuvinte[i][0])
                 {
@@ -525,8 +520,7 @@ float valoareFunctiei(functie E, float x)
     {
         printf("Returnez: %f\n", operand[1]);
         return operand[1];
-    }
-    else
+    }else
     {
         printf("Varful stivei operanzilor:%f\n", operand[1]);
         printf("In varful stivei operatorilor top2 este:%d. top2=%d\n",op[top2] ,top2);
@@ -579,6 +573,7 @@ bool esteImpartireLa0(char *s, int i)
 {
     return (strchr("/", s[i]) && strchr("x", s[i + 1]) && E.x == 0);
 }
+
 /**
  * Valideaza expresia functiei date
 */
@@ -611,8 +606,8 @@ void valideazaFunctia(functie &E)
         }
         else if (strchr("(", s[i]))
         {
-            int sirulSeTerminaBrusc = 0;
-            for (int j = i + 1; j < n && !sirulSeTerminaBrusc; j++)
+            int sirulSeTerminaBrusc = 0, j;
+            for (j = i + 1; j < n && !sirulSeTerminaBrusc; j++)
             {
                 if (strchr("x0987654321+-*^/", s[j]) && s[j + 1] == '\0')
                 {
@@ -622,11 +617,14 @@ void valideazaFunctia(functie &E)
                 {
                     sirulSeTerminaBrusc = 1;
                 }
+                if(s[j] == ')'){
+                    break;
+                }
             }
             if (sirulSeTerminaBrusc)
             {
                 greseala = 1;
-                greseli[0][nrGreseli] = i;
+                greseli[0][nrGreseli] = j--;
                 greseli[1][nrGreseli] = EROARE_SIRUL_SE_TERMINA_BRUSC;
                 nrGreseli++;
             }
@@ -652,6 +650,9 @@ void valideazaFunctia(functie &E)
     }
 }
 
+/**
+ * Afiseaza rezultatul expresiei
+*/
 void afisare(functie E)
 {
     float y = valoareFunctiei(E, E.x);
@@ -706,6 +707,11 @@ int main()
     getch();
     closegraph();
     return 0;
+
+
+
+    formeazaExpresia(E);
+    afisare(E);
 
     char s;
     printf("\n Evalueaza alta functie? (Y/N) ");
