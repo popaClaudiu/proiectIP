@@ -5,6 +5,7 @@
 #define EROARE_DUPA_PARANTEZA_NU_ESTE_OP_BINAR 4
 #define EROARE_SIRUL_SE_TERMINA_BRUSC 3
 #define EROARE_IMPARTIRE_LA_0 5
+#define EROARE_RADICAL_SAU_LOGARITM_DIN_NR_NEGATIV 6
 using namespace std;
 
 /**
@@ -136,7 +137,7 @@ void Copy(char *s, char sir[255], int start, int stop)
 void Delete(char *sir, int start, int stop)
 {
     strcpy(sir, sir + start + stop + 1);
-    printf("Expresia dupa stergere: %s \n",sir);
+    printf("Expresia dupa stergere: %s \n", sir);
     afiseazaCuvinte();
 }
 
@@ -207,7 +208,7 @@ void puneZerouriInExpresie(functie &E)
 
     if (s[0] == '+' || s[0] == '-')
     {
-        desplaseazaSirul(s, n+1, 0);
+        desplaseazaSirul(s, n + 1, 0);
         s[0] = '0';
     }
     else if ((s[n - 1] == '+' || s[n - 1] == '-') && s[n] == '\0')
@@ -344,28 +345,28 @@ float valoareFunctiei(functie E, float x)
             top1++;
             valoareOperand = valoareaOperandului(E.cuvinte[i], cod);
             operand[top1] = valoareOperand;
-            printf("In varful stivei am adaugat constanta: %f \n",operand[top1]);
+            printf("In varful stivei am adaugat constanta: %f \n", operand[top1]);
         }
         else
         {
-            if (strchr("qeX(", E.cuvinte[i][0]) && E.cuvinte[i][0] != ' ' && E.cuvinte[i][1] !='x')
-            {            
+            if (strchr("qeX(", E.cuvinte[i][0]) && E.cuvinte[i][0] != ' ' && E.cuvinte[i][1] != 'x')
+            {
                 switch (E.cuvinte[i][0])
                 {
                 case 'q':
                     top1++;
                     operand[top1] = pi;
-                    printf("In varful stivei este PI: %f\n",operand[top1]);
+                    printf("In varful stivei este PI: %f\n", operand[top1]);
                     break;
                 case 'e':
                     top1++;
                     operand[top1] = e;
-                    printf("In varful stivei este constanta Euler: %f\n",operand[top1]);
+                    printf("In varful stivei este constanta Euler: %f\n", operand[top1]);
                     break;
                 case 'X':
                     top1++;
                     operand[top1] = x;
-                    printf("In varful stivei X este: %f\n",operand[top1]);
+                    printf("In varful stivei X este: %f\n", operand[top1]);
                     break;
                 case '(':
                     top2++;
@@ -377,7 +378,7 @@ float valoareFunctiei(functie E, float x)
             }
             else
             {
-                printf("In varful stivei operatorilor este: %c\n",op[top2]);
+                printf("In varful stivei operatorilor este: %c\n", op[top2]);
                 printf("Cuvantul:%c\n", E.cuvinte[i][0]);
                 while (
                     top2 > 0 && (!strchr("()", op[top2])) &&
@@ -480,9 +481,9 @@ float valoareFunctiei(functie E, float x)
                         }
                         if (strchr("=#<>+-/*^scleart", op[top2]) && top1 > 0)
                         {
-                            printf( "Scad din stiva operatorilor\n");
+                            printf("Scad din stiva operatorilor\n");
                             operand[top1] = valoareOperand;
-                            printf("\n In varful stivei operanzilor este:%f\n",operand[top1]);
+                            printf("\n In varful stivei operanzilor este:%f\n", operand[top1]);
                             top2--;
                         }
                     }
@@ -513,10 +514,11 @@ float valoareFunctiei(functie E, float x)
     {
         printf("Returnez: %f\n", operand[1]);
         return operand[1];
-    }else
+    }
+    else
     {
         printf("Varful stivei operanzilor:%f\n", operand[1]);
-        printf("In varful stivei operatorilor top2 este:%d. top2=%d\n",op[top2] ,top2);
+        printf("In varful stivei operatorilor top2 este:%d. top2=%d\n", op[top2], top2);
         for (int i = 0; i <= top2; i++)
         {
             cout << op[top2] << endl;
@@ -548,6 +550,9 @@ void afiseazaGreseli(int greseli[2][10], int j)
         case EROARE_IMPARTIRE_LA_0:
             printf("La pozitia %d. Nu poti imparti la 0.\n", greseli[0][i]);
             break;
+        case EROARE_RADICAL_SAU_LOGARITM_DIN_NR_NEGATIV:
+            printf("La pozitia %d. Nu poti face radical din numar negativ!\n", greseli[0][i]);
+            break;
         }
     }
 }
@@ -565,6 +570,11 @@ bool dupaParantezaEsteOperatorBinar(char *s, int i)
 bool esteImpartireLa0(char *s, int i)
 {
     return (strchr("/", s[i]) && strchr("x", s[i + 1]) && E.x == 0);
+}
+
+bool esteRadicalSauLogaritmDinNumarNegativ(char *s, int i)
+{
+    return (strchr("dg", s[i]) && (s[i + 2] == '-' || (s[i + 2] == 'x' && E.x < 0)));
 }
 
 /**
@@ -610,7 +620,8 @@ void valideazaFunctia(functie &E)
                 {
                     sirulSeTerminaBrusc = 1;
                 }
-                if(s[j] == ')'){
+                if (s[j] == ')')
+                {
                     break;
                 }
             }
@@ -627,6 +638,13 @@ void valideazaFunctia(functie &E)
             greseala = 1;
             greseli[0][nrGreseli] = i;
             greseli[1][nrGreseli] = EROARE_IMPARTIRE_LA_0;
+            nrGreseli++;
+        }
+        else if (esteRadicalSauLogaritmDinNumarNegativ(s, i))
+        {
+            greseala = 1;
+            greseli[0][nrGreseli] = i;
+            greseli[1][nrGreseli] = EROARE_RADICAL_SAU_LOGARITM_DIN_NR_NEGATIV;
             nrGreseli++;
         }
     }
@@ -656,6 +674,6 @@ void afisare(functie E)
     }
     else
     {
-        printf("f(%f)=nedefinit", E.x);
+        printf("f(%f)=INPUT INVALID", E.x);
     }
 }
