@@ -105,25 +105,26 @@ float putere(float x, float y)
             std::cout << "incepem sa inmultim"
                       << "\n";
             yi = trunc(y);
+            std::cout<<x<<" si "<<yi<<"\n";
             p = 1;
             for (i = 1; i <= (yi / 2); i++)
             {
                 p *= x;
-                p *= p;
+                p *= x;
                 std::cout << "p=" << p;
             }
+
             if (!estePar(yi))
             {
                 p *= x;
-                std::cout << "p=" << p;
+                std::cout <<"Impar p=" << p;
             }
 
             return p;
         }
         else
         {
-            return exponential(
-                inmultit(y, logaritm(x)));
+            return exponential(inmultit(y, logaritm(x)));
         }
     }
 }
