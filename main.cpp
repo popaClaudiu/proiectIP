@@ -355,8 +355,8 @@ float valoareFunctiei(functie E, float x)
         }
         else
         {
-            if (strchr("qeX(", E.cuvinte[i][0]) && E.cuvinte[i][0] != ' ')
-            {                
+            if (strchr("qeX(", E.cuvinte[i][0]) && E.cuvinte[i][0] != ' ' && E.cuvinte[i][1] !='x')
+            {            
                 switch (E.cuvinte[i][0])
                 {
                 case 'q':
@@ -520,8 +520,7 @@ float valoareFunctiei(functie E, float x)
     {
         printf("Returnez: %f\n", operand[1]);
         return operand[1];
-    }
-    else
+    }else
     {
         printf("Varful stivei operanzilor:%f\n", operand[1]);
         printf("In varful stivei operatorilor top2 este:%d. top2=%d\n",op[top2] ,top2);
@@ -667,6 +666,7 @@ void afisare(functie E)
 int main()
 {
     citesteFunctie(E);
+
     formeazaExpresia(E);
     afisare(E);
 
