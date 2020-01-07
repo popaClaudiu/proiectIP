@@ -264,7 +264,7 @@ bool esteNumar(char s)
 
 float valoareaOperandului(char *s, int &cod)
 {
-    char s1[255];
+    char s1[strlen(s)];
     int i = 0, j = 0;
 
     for (i = 0; i < strlen(s); i++)
@@ -275,7 +275,6 @@ float valoareaOperandului(char *s, int &cod)
             j++;
         }
     }
-
     cod = atof(s1);
     return atof(s1);
 }

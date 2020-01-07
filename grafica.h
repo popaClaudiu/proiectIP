@@ -5320,7 +5320,18 @@ void citesteString(int window1)
             }
             if(apasatAfis2>0)
             {
+                strcpy(E.expresie,c);
+                formeazaExpresia(E);
 
+                int rezultat = (int) valoareFunctiei(E,0);
+                // 0,235,600,265
+
+                char rezultat1[255];
+                itoa(rezultat,rezultat1,10);
+
+                outtextxy(300,20,rezultat1);
+
+                apasatAfis2 = 0;
             }
         }
         delay(5);
@@ -5355,6 +5366,7 @@ void incepeTutorialul(int window){
                                 setfillstyle(SOLID_FILL,BLACK);
                                 bar(0,0,600,600);
                                 incepeTutorialul(window);
+
                         }
                     }
                 }
@@ -5411,6 +5423,7 @@ void pornesteProgramul(int window)
                 setfillstyle(SOLID_FILL,BLACK);
                 bar(0,0,600,600);
                 incepeTutorialul(window);
+                deseneazaEcranulDeStart();
             }
         }
 
