@@ -11,6 +11,7 @@
 #include <iostream>
 #include <stdio.h>
 #include "functions.h"
+#include "structure.h"
 using namespace std;
 #define MAX_STIVA 100
 #define EROARE_ESTE_O_LITERA_DUPA_O_CIFRA 2
@@ -18,22 +19,7 @@ using namespace std;
 #define EROARE_SIRUL_SE_TERMINA_BRUSC 3
 #define EROARE_IMPARTIRE_LA_0 5
 
-/**
-* O functie este declarata sub forma unei structuri de tip inregistrare
-*  expresie = expresia functiei
-*  cuvinte = contine toate cuvintele ce formeaza expresia matematica
-*  lungime = lungimea efectiva a vectorului
-*  a,b = un interval de evaluare a functiei
-*  n = numarul de puncte de evaluare
-*/
-struct record
-{
-    char expresie[256];
-    char cuvinte[100][10];
-    int lungime;
-    float x;
-};
-typedef record functie;
+
 functie E;
 
 void citesteFunctie(functie &E);
@@ -263,6 +249,7 @@ bool seAflaInParanteza(int t1, int t2, int i)
 {
     return ((t1 != t2) || ((t1 == tipCaracter('(')) && (t2 == t1)) || ((t1 == tipCaracter(')')) && (t2 == t1)));
 }
+
 /*
 *  Pune spatii in expresie intre caractere de tipuri diferite
 */
@@ -290,6 +277,9 @@ void puneSpatiiInExpresie(functie &E)
     }
 }
 
+/**
+ * Pregateste functia pentru evaluare
+*/
 void formeazaExpresia(functie &E)
 {
     puneZerouriInExpresie(E);
@@ -573,6 +563,7 @@ bool esteImpartireLa0(char *s, int i)
 {
     return (strchr("/", s[i]) && strchr("x", s[i + 1]) && E.x == 0);
 }
+
 /**
  * Valideaza expresia functiei date
 */
@@ -649,6 +640,9 @@ void valideazaFunctia(functie &E)
     }
 }
 
+/**
+ * Afiseaza rezultatul expresiei
+*/
 void afisare(functie E)
 {
     float y = valoareFunctiei(E, E.x);
