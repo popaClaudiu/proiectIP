@@ -263,6 +263,7 @@ bool seAflaInParanteza(int t1, int t2, int i)
 {
     return ((t1 != t2) || ((t1 == tipCaracter('(')) && (t2 == t1)) || ((t1 == tipCaracter(')')) && (t2 == t1)));
 }
+
 /*
 *  Pune spatii in expresie intre caractere de tipuri diferite
 */
@@ -290,6 +291,9 @@ void puneSpatiiInExpresie(functie &E)
     }
 }
 
+/**
+ * Pregateste functia pentru evaluare
+*/
 void formeazaExpresia(functie &E)
 {
     puneZerouriInExpresie(E);
@@ -573,6 +577,7 @@ bool esteImpartireLa0(char *s, int i)
 {
     return (strchr("/", s[i]) && strchr("x", s[i + 1]) && E.x == 0);
 }
+
 /**
  * Valideaza expresia functiei date
 */
@@ -649,6 +654,9 @@ void valideazaFunctia(functie &E)
     }
 }
 
+/**
+ * Afiseaza rezultatul expresiei
+*/
 void afisare(functie E)
 {
     float y = valoareFunctiei(E, E.x);
