@@ -131,17 +131,17 @@ float putere(float x, float y)
 
 float sinus(float x)
 {
-    return diferitDeInfinit(x) ? sin(x) : infinit;
+    return diferitDeInfinit(x) ? sin(x*pi/180.0) : infinit;
 }
 
 float cosinus(float x)
 {
-    return diferitDeInfinit(x) ? cos(x) : infinit;
+    return diferitDeInfinit(x) ? cos(x*pi/180.0) : infinit;
 }
 
 float tangent(float x)
 {
-    return diferitDeInfinit(x) ? tan(x) : infinit;
+    return diferitDeInfinit(x) ? tan(x*pi/180.0) : infinit;
 }
 
 float radical(float x)
