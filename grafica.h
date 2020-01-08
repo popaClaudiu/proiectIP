@@ -4860,6 +4860,7 @@ void citesteString(int window1)
                 if(cursorPosition.x>500 && cursorPosition.x<600 && cursorPosition.y>327 && cursorPosition.y<385 && apasatAfis2 == 0)
                 {
                     //strcat(c,"Del");
+                    //0,235,600,265
                     contorButoane++;
                     lungimeSir=lungimeSir+3;
                     if(contorButoane>12)
@@ -4867,9 +4868,9 @@ void citesteString(int window1)
                     if(greseala == 1){
                         greseala = 0;
                         bar(0,150,600,240);
-                        bar(5,230,590,260);
+                        bar(5,236,590,260);
                     }
-
+                    bar(5,236,590,260);
                     c[strlen(c)-1] = '\0';
                     strcpy(E.expresie,c);
                     cout<<E.expresie<<endl;
