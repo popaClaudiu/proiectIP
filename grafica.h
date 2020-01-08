@@ -45,6 +45,8 @@ void dreptunghi(int x,int y,int lat,int inalt)
 */
 void afiseazaGreseli(int greseli[2][10], int j)
 {
+    bar(0,150,600,245);
+    readimagefile("alert.jpg",0,157,19,175);
     for (int i = 0; i < j; i++)
     {
         switch (greseli[1][i])
@@ -4664,7 +4666,7 @@ void citireX2(int window1,char key,int c1)
 
 void citesteString(int window1)
 {
-    int i,j,nr,nr2=0,nr3=0,contorButoane2=0,contorButoane=0,lungimeSir=0,lungimeSir2=0,apasatAfis1=0,apasatAfis2=0;
+    int i,j,nr,nr2=0,nr3=0,contorButoane2=0,contorButoane=0,lungimeSir=0,lungimeSir2=0,apasatAfis1=0,apasatAfis2=0,resetat=0;
     float result[10000];
     char c[10000],c2[10000];
     POINT cursorPosition;
@@ -4678,6 +4680,12 @@ void citesteString(int window1)
         outtextxy(15,115,E.expresie);
 
         rectangle(0,300,600,600);
+
+        // BUTONUL RESET
+        rectangle(0,270,100,300);
+        settextstyle(BOLD_FONT,HORIZ_DIR,3);
+        outtextxy(10,272,"Reset");
+
         rectangle(0,100,600,150);
         //rectangle(100,200,500,300);
         settextstyle(BOLD_FONT,HORIZ_DIR,4);//Fontu,Directia,Marimea
@@ -4703,6 +4711,13 @@ void citesteString(int window1)
             outtextxy(150,205,"Valoare Functie/f(x)");
             rectangle(0,235,600,265);//Dreptunghi sub textul Valoare Functie/f(x)
 
+        }
+        if(resetat){
+            resetat = 0;
+            //reseteazaCalculatorul();
+            cout<<"RESETEAZA CALCULATORUL"<<endl;
+            bar(0,150,600,271);
+            citesteString(window1);
         }
 
         //for(i=25; i<=400; i=i+25)
@@ -4793,6 +4808,17 @@ void citesteString(int window1)
             setcolor(WHITE);
             if(apasatAfis1==0 && apasatAfis2==0)
             {
+                 // BUTONUL RESET
+                rectangle(0,270,100,300);
+                settextstyle(BOLD_FONT,HORIZ_DIR,3);
+                outtextxy(10,272,"Reset");
+
+                if(cursorPosition.x > 0 && cursorPosition.x < 100 && cursorPosition.y > 300 && cursorPosition.y < 330)
+                {
+                    resetat = 1;
+                    bar(0,150,600,271);
+                }
+
                 if(cursorPosition.x>500 && cursorPosition.x<600 && cursorPosition.y>270 && cursorPosition.y<326)
                 {
                     if(greseala == 0){
@@ -4812,7 +4838,7 @@ void citesteString(int window1)
                     rectangle(0,172,600,200);//Dreptunghide sub textul Citeste Necunoscuta X
 
                 }
-                if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>300 && cursorPosition.y<390)
+                if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>330 && cursorPosition.y<390)
                 {
                     strcat(c,"<");
                     contorButoane++;
@@ -5094,6 +5120,14 @@ void citesteString(int window1)
             }
             if(apasatAfis1>0 && apasatAfis2==0)
             {
+
+                if(cursorPosition.x > 0 && cursorPosition.x < 100 && cursorPosition.y > 300 && cursorPosition.y < 330)
+                {
+                    resetat = 1;
+                    apasatAfis2 = 0;
+                    apasatAfis1 = 0;
+                }
+
                 if(cursorPosition.x>500 && cursorPosition.x<600 && cursorPosition.y>270 && cursorPosition.y<326)
                 {
                      if(greseala == 0){
@@ -5166,7 +5200,7 @@ void citesteString(int window1)
                         nr3++;
                     c[strlen(c)] = '\0';
                     strcpy(E.expresie,c);
-                    bar(5,230,590,260);
+                    bar(5,236,590,260);
                     //cinTastatura2(window1,c2,nr3,lungimeSir2);
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>385 && cursorPosition.y<445)
@@ -5388,6 +5422,20 @@ void citesteString(int window1)
             }
             if(apasatAfis2>0)
             {
+
+                if(cursorPosition.x > 0 && cursorPosition.x < 100 && cursorPosition.y > 300 && cursorPosition.y < 330)
+                {
+                    resetat = 1;
+                    apasatAfis2 = 0;
+                    apasatAfis1 = 0;
+                    if(greseala == 1)
+                    {
+                        greseala = 0;
+                        setfillstyle(SOLID_FILL,BLACK);
+                    }
+                    bar(0,150,600,271);
+                }
+
                 strcpy(E.expresie,c);
                 valideazaFunctia(E);
 
@@ -5403,15 +5451,20 @@ void citesteString(int window1)
 
                     char rezultat1[255];
                     rezultat1[0]='\0';
-                    if(esteIntreg(rezultat)){
-                        int rezultatIntreg = (int) rezultat;
-                        itoa(rezultatIntreg,rezultat1,10);
+                    if(diferitDeInfinit(rezultat)){
+                        if(esteIntreg(rezultat)){
+                            int rezultatIntreg = (int) rezultat;
+                            itoa(rezultatIntreg,rezultat1,10);
+                        }else{
+                           floatToString(rezultat,rezultat1);
+                        }
                     }else{
-                       floatToString(rezultat,rezultat1);
+                        strcpy(rezultat1,"INPUT INVALID");
                     }
 
+
                     bar(10,240,590,260);
-                    outtextxy(300,240,rezultat1);
+                    outtextxy(150,240,rezultat1);
 
                     apasatAfis2 = 0;
                 }
