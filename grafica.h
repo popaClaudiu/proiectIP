@@ -4668,18 +4668,11 @@ void citireX2(int window1,char key,int c1)
 
 void citesteString(int window1)
 {
-    int i,j,nr,nr2=0,nr3=0,contorButoane2=0,contorButoane=0,lungimeSir=0,lungimeSir2=0,apasatAfis1=0,apasatAfis2=0,resetat=0;
+    int i,j,nr=1,nr2=0,nr3=0,contorButoane2=0,contorButoane=0,lungimeSir=0,lungimeSir2=0,apasatAfis1=0,apasatAfis2=0,resetat=0;
     float result[10000];
     char c[10000],c2[10000];
     POINT cursorPosition;
 
-    while(1)
-    {
-        strcpy(E.expresie,c);
-
-        bar(10,110,590,135);
-        settextstyle(BOLD_FONT,HORIZ_DIR,2);
-        outtextxy(15,115,E.expresie);
 
         rectangle(0,300,600,600);
 
@@ -4716,36 +4709,7 @@ void citesteString(int window1)
         }
 
 
-        if(apasatAfis1>0)
-        {
-            settextstyle(BOLD_FONT,HORIZ_DIR,2);
-            if(instrusctiuniRO)
-                outtextxy(150,151,"Citeste Necunoscuta X");
-            else
-                outtextxy(150,151,"Enter the value of X");
-            rectangle(0,172,600,200);//Dreptunghide sub textul Citeste Necunoscuta X
-
-        }
-        if(apasatAfis2>0 && greseala == 0)
-        {
-            settextstyle(BOLD_FONT,HORIZ_DIR,2);
-             if(instrusctiuniRO)
-                outtextxy(150,205,"Valoare Functie/f(x)");
-            else
-                outtextxy(150,205,"Function's Value/f(x)");
-            rectangle(0,235,600,265);//Dreptunghi sub textul Valoare Functie/f(x)
-
-        }
-        if(resetat){
-            resetat = 0;
-            bar(0,150,600,271);
-            citesteString(window1);
-        }
-
-        //for(i=25; i<=400; i=i+25)
-        //  line(i+100,200,i+100,300);
-        nr=1;
-        for(i=0; i<=600; i=i+100)
+    for(i=0; i<=600; i=i+100)
         {
             if(i==300)
             {
@@ -4823,6 +4787,48 @@ void citesteString(int window1)
                 }
             }
         }
+
+    while(1)
+    {
+        if(strcmp(E.expresie,c) > 0 || strcmp(E.expresie,c) < 0)
+        {
+            strcpy(E.expresie,c);
+
+            bar(10,110,590,135);
+            settextstyle(BOLD_FONT,HORIZ_DIR,2);
+            outtextxy(15,115,E.expresie);
+        }
+
+        if(apasatAfis1>0)
+        {
+            settextstyle(BOLD_FONT,HORIZ_DIR,2);
+            if(instrusctiuniRO)
+                outtextxy(150,151,"Citeste Necunoscuta X");
+            else
+                outtextxy(150,151,"Enter the value of X");
+            rectangle(0,172,600,200);//Dreptunghide sub textul Citeste Necunoscuta X
+
+        }
+        if(apasatAfis2>0 && greseala == 0)
+        {
+            settextstyle(BOLD_FONT,HORIZ_DIR,2);
+             if(instrusctiuniRO)
+                outtextxy(150,205,"Valoare Functie/f(x)");
+            else
+                outtextxy(150,205,"Function's Value/f(x)");
+            rectangle(0,235,600,265);//Dreptunghi sub textul Valoare Functie/f(x)
+
+        }
+        if(resetat){
+            resetat = 0;
+            bar(0,150,600,271);
+            citesteString(window1);
+        }
+
+        //for(i=25; i<=400; i=i+25)
+        //  line(i+100,200,i+100,300);
+        nr=1;
+
         GetCursorPos(&cursorPosition);
         if(ismouseclick(WM_LBUTTONDOWN))
         {
@@ -5642,9 +5648,24 @@ void incepeTutorialul(int window){
     }
 }
 
+bool esteInegalitateSauEgalitate(char *expresie)
+{
+    int contor = 0;
+    for(int i = 0; i < strlen(expresie); i++){
+        if(strchr("=><#",expresie[i])){
+            contor++;
+        }
+    }
+
+    if(contor == 1) return true;
+    return false;
+
+}
+
 void deseneazaEcranulDeStart(){
 
-  if(instrusctiuniRO){
+  if(instrusctiuniRO && instructiuniEN == 0){
+        setfillstyle(SOLID_FILL,BLACK);
         bar(170,150,500,190);
         settextstyle(BOLD_FONT,HORIZ_DIR,3);
         outtextxy(170,150,"Evaluator Matematic");
@@ -5669,7 +5690,9 @@ void deseneazaEcranulDeStart(){
         outtextxy(190,360,"Selecteaza Limba");
 
     }
-    else{
+    else if(instructiuniEN && instrusctiuniRO==0){
+
+        setfillstyle(SOLID_FILL,BLACK);
         bar(170,150,500,190);
         settextstyle(BOLD_FONT,HORIZ_DIR,3);
         outtextxy(170,150,"Mathematic evaluator");
@@ -5697,21 +5720,9 @@ void deseneazaEcranulDeStart(){
 
 }
 
-bool esteInegalitateSauEgalitate(char *expresie)
-{
-    int contor = 0;
-    for(int i = 0; i < strlen(expresie); i++){
-        if(strchr("=><#",expresie[i])){
-            contor++;
-        }
-    }
-
-    if(contor == 1) return true;
-    return false;
-
-}
 void pornesteProgramul(int window)
 {
+    int schimbare = 0;
     readimagefile("assets\\bg.jpg",0,0,600, 600);
     deseneazaEcranulDeStart();
     while(1)
@@ -5740,15 +5751,14 @@ void pornesteProgramul(int window)
                 setcolor(WHITE);
                 instructiuniEN = 0;
                 instrusctiuniRO = 1;
-                cout<<"ROMANA"<<endl;
-                //readimagefile("english.jpg",350,400,390,450)
+                schimbare = 1;
             }else if(x>350 && x<390 && y>400 && y<450){
                 setcolor(BLUE);
                 rectangle(350,400,390,450);
                 setcolor(WHITE);
                 instrusctiuniRO = 0;
                 instructiuniEN = 1;
-                cout<<"ENGLEZA"<<endl;
+                schimbare = 1;
             }
         }
 
@@ -5767,26 +5777,29 @@ void pornesteProgramul(int window)
                     bar(205,205,395,245);
                     outtextxy(240,215,"Evaluate");
                 }
+                schimbare = 1;
 
             }else if( x > 200 && x < 400 && y > 300 && y < 350){
                 setcolor(BLUE);
                 setlinestyle(SOLID_LINE,USERBIT_LINE,THICK_WIDTH);
                 rectangle(200,300,400,350);
-
+                schimbare = 1;
                 settextstyle(BOLD_FONT,HORIZ_DIR,3);
                 outtextxy(240,315,"Tutorial");
 
             }else if(x>220 && x<260 && y>400 && y<450){
                 setcolor(BLUE);
                 rectangle(220,400,260,450);
+                schimbare = 1;
                 setcolor(WHITE);
-                //readimagefile("english.jpg",350,400,390,450)
             }else if(x>350 && x<390 && y>400 && y<450){
                 setcolor(BLUE);
                 rectangle(350,400,390,450);
+                schimbare = 1;
                 setcolor(WHITE);
-            }else{
+            }else if(schimbare){
                 setcolor(WHITE);
+                schimbare = 0;
                 deseneazaEcranulDeStart();
             }
     }
