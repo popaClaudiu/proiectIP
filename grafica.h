@@ -29,18 +29,6 @@ void dreptunghi(int x,int y,int lat,int inalt)
     line(x+lat/2,y+lat/2,x+lat/2,y-lat/2);
 }
 
-/*void fabuton(buton& b,int b.x1,int b.y1,int b.x2,int b.y2)
-{
-    if(stil==RELAXAT)
-    {
-        bar3d();
-    }
-    else
-    {
-        bar();
-    }
-}*/
-
 int instrusctiuniRO = 1, instructiuniEN = 0;
 /**
  * Afiseaza greselile gasite in expresia functiei
@@ -106,16 +94,10 @@ void Trasare30careuri(int window1,char key,int c1)
 
     rectangle(0,300,600,600);
     rectangle(0,100,600,150);
-    //rectangle(100,200,500,300);
+
     settextstyle(BOLD_FONT,HORIZ_DIR,4);//Fontu,Directia,Marimea
     outtextxy(150,60,"Introdu Functia");//Afisare text : "Introdu Functia"
 
-    /*settextstyle(BOLD_FONT,HORIZ_DIR,2);
-    outtextxy(150,151,"Citeste Necunoscuta X");
-    rectangle(0,172,600,200);//Dreptunghide sub textul Citeste Necunoscuta X
-    settextstyle(BOLD_FONT,HORIZ_DIR,2);
-    outtextxy(150,205,"Valoare Functie/f(x)");
-    rectangle(0,235,600,265);//Dreptunghi sub textul Valoare Functie/f(x)*/
 
     rectangle(400,270,600,300);
     line(500,270,500,300);
@@ -126,8 +108,7 @@ void Trasare30careuri(int window1,char key,int c1)
 
     for(i=50; i<=600; i=i+50)
         line(i,100,i,150);
-    //for(i=25; i<=400; i=i+25)
-    // line(i+100,200,i+100,300);
+
 
     nr=1;
     for(i=0; i<=600; i=i+100)
@@ -4928,8 +4909,6 @@ void citesteString(int window1)
                 }
                 if(cursorPosition.x>500 && cursorPosition.x<600 && cursorPosition.y>327 && cursorPosition.y<385 && apasatAfis2 == 0)
                 {
-                    //strcat(c,"Del");
-                    //0,235,600,265
                     contorButoane++;
                     lungimeSir=lungimeSir+3;
                     if(contorButoane>12)
@@ -4944,7 +4923,6 @@ void citesteString(int window1)
                     apasatAfis1 = 0;
                     apasatAfis2 = 0;
                     cout<<E.expresie<<endl;
-                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>385 && cursorPosition.y<445)
                 {
@@ -5256,7 +5234,7 @@ void citesteString(int window1)
                     lungimeSir2=lungimeSir2+3;
                     if(contorButoane2>12)
                         nr3++;
-                    c[strlen(c)] = '\0';
+                    c[strlen(c)-1] = '\0';
                     strcpy(E.expresie,c);
                     bar(5,236,590,260);
                     apasatAfis1 = 0;
