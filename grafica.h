@@ -3,7 +3,8 @@
 #include <graphics.h>
 #include <winbgim.h>
 #include <cstring>
-
+#include <windows.h>
+#include <mmsystem.h>
 using namespace std;
 #define MAX 50
 #define APASAT 1
@@ -4687,6 +4688,10 @@ void citesteString(int window1)
         settextstyle(BOLD_FONT,HORIZ_DIR,3);
         outtextxy(10,272,"Reset");
 
+        // Add exit button
+        readimagefile("exit.jpg", 10,10,40,40);
+
+
         rectangle(0,100,600,140);
         //rectangle(100,200,500,300);
         settextstyle(BOLD_FONT,HORIZ_DIR,4);//Fontu,Directia,Marimea
@@ -4805,17 +4810,25 @@ void citesteString(int window1)
         {
             clearmouseclick(WM_LBUTTONDOWN);
             setcolor(WHITE);
+
             if(apasatAfis1==0 && apasatAfis2==0)
             {
                  // BUTONUL RESET
                 rectangle(0,270,100,300);
                 settextstyle(BOLD_FONT,HORIZ_DIR,3);
                 outtextxy(10,272,"Reset");
-
                 if(cursorPosition.x > 0 && cursorPosition.x < 100 && cursorPosition.y > 300 && cursorPosition.y < 330)
                 {
                     resetat = 1;
                     bar(0,150,600,271);
+                }
+
+                if(cursorPosition.x > 10 && cursorPosition.x < 70 && cursorPosition.y > 10 && cursorPosition.y < 70){
+                    setfillstyle(SOLID_FILL,BLACK);
+                    bar(0,0,600,600);
+                    cout<<"EXIT";
+                    pornesteProgramul(window1);
+
                 }
 
                 if(cursorPosition.x>500 && cursorPosition.x<600 && cursorPosition.y>270 && cursorPosition.y<326)
@@ -4897,6 +4910,8 @@ void citesteString(int window1)
                     }
                     bar(5,236,590,260);
                     c[strlen(c)-1] = '\0';
+                    apasatAfis1 = 0;
+                    apasatAfis2 = 0;
                     strcpy(E.expresie,c);
                     cout<<E.expresie<<endl;
                     //cinTastatura(window1,c,nr2,lungimeSir);
@@ -5119,6 +5134,13 @@ void citesteString(int window1)
             }
             if(apasatAfis1>0 && apasatAfis2==0)
             {
+                if(cursorPosition.x > 10 && cursorPosition.x < 70 && cursorPosition.y > 10 && cursorPosition.y < 60){
+                    setfillstyle(SOLID_FILL,BLACK);
+                    bar(0,0,600,600);
+                    cout<<"EXIT";
+                    pornesteProgramul(window1);
+
+                }
 
                 if(cursorPosition.x > 0 && cursorPosition.x < 100 && cursorPosition.y > 300 && cursorPosition.y < 330)
                 {
@@ -5200,6 +5222,8 @@ void citesteString(int window1)
                     c[strlen(c)] = '\0';
                     strcpy(E.expresie,c);
                     bar(5,236,590,260);
+                    apasatAfis1 = 0;
+                    apasatAfis2 = 0;
                     //cinTastatura2(window1,c2,nr3,lungimeSir2);
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>385 && cursorPosition.y<445)
@@ -5483,15 +5507,15 @@ void citesteString(int window1)
                 bar(0,205,600,265);
             }
         }
-        delay(5);
+        delay(10);
     }
 
 }
 
 void incepeTutorialul(int window){
-    readimagefile("starting_menu.jpg",100,100,500,500);
+    readimagefile("evaluator.jpg",100,100,500,500);
     readimagefile("right-arrow.jpg",510,250,600,300);
-    readimagefile("exit.jpg", 20,10,40,40);
+    readimagefile("exit.jpg", 10,10,40,40);
 
     while(1){
 
@@ -5502,16 +5526,39 @@ void incepeTutorialul(int window){
             clearmouseclick(WM_LBUTTONDOWN);
             cout<<"x="<<x<<' '<<"y="<<y<<endl;
             if(x>510 && x<600 && y > 250 && y < 300){
+                PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\click.wav",NULL,SND_ASYNC);
                 setfillstyle(SOLID_FILL,BLACK);
                 bar(0,0,600,600);
-                readimagefile("evaluator.jpg",100,100,500,500);
-                readimagefile("left-arrow.jpg",0,250,100,300);
+                setcolor(WHITE);
+                settextstyle(BOLD_FONT,HORIZ_DIR,2);
+                outtextxy(10,50,"Dupa ce ai terminat de introdus expresia ");
+                outtextxy(10,70,"si vrei sa scrii valoarea lui x. Trebuie sa");
+                outtextxy(10,90,"apesi pe butonul NEC. de pe ecran");
+
+                outtextxy(10,130,"Pentru a vedea rezultatul calculului dat");
+                outtextxy(10,150,"va trebui sa apesi pe butonul REZ. de pe ecran.");
+
+                outtextxy(10,180, "Pentru a te intoarce la ecranul de start");
+                outtextxy(10,200, "poti oricand sa apesi pe butonul X din stanga sus.");
+
+                outtextxy(10,300,"Evaluatorul are si un sistem de detectare al");
+                outtextxy(10,320,"erorilor de scriere.Acestea pot aparea sub forma");
+                outtextxy(10,340,"urmatoare:");
+                readimagefile("erori.jpg",100,360,500,400);
+
+                outtextxy(10,400,"Pentru a scapa de erori si a putea continua");
+                outtextxy(10,420,"expresia trebuie sa apesi pe butonul delete");
+                outtextxy(10,440,"de pe ecran.");
+                readimagefile("left-arrow.jpg",0,250,70,300);
+
+
                 while(1){
                     if(ismouseclick(WM_LBUTTONDOWN))
                     {
                         int x = mousex(), y = mousey();
                         clearmouseclick(WM_LBUTTONDOWN);
                         if(x>0 && x<100 && y > 250 && y < 300){
+                                PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\click.wav",NULL,SND_ASYNC);
                                 setfillstyle(SOLID_FILL,BLACK);
                                 bar(0,0,600,600);
                                 incepeTutorialul(window);
@@ -5519,7 +5566,8 @@ void incepeTutorialul(int window){
                         }
                     }
                 }
-            }else if(x>20 && x<40 && y>10 && y<40){
+            }else if(x>10 && x<40 && y>10 && y<40){
+                PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\click.wav",NULL,SND_ASYNC);
                 setfillstyle(SOLID_FILL,BLACK);
                 bar(0,0,600,600);
                 pornesteProgramul(window);
@@ -5570,12 +5618,14 @@ void pornesteProgramul(int window)
             x = mousex(), y = mousey();
             clearmouseclick(WM_LBUTTONDOWN);
             if(x > 200 && x < 400 && y > 200 && y < 250){
+                PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\click.wav",NULL,SND_SYNC);
                 setfillstyle(SOLID_FILL,BLACK);
                 bar(0,0,600,600);
                 setcolor(WHITE);
                 citesteString(window);
             }else if( x > 200 && x < 400 && y > 300 && y < 350)
             {
+                PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\click.wav",NULL,SND_SYNC);
                 setfillstyle(SOLID_FILL,BLACK);
                 bar(0,0,600,600);
                 incepeTutorialul(window);
@@ -5590,6 +5640,7 @@ void pornesteProgramul(int window)
 
                 settextstyle(BOLD_FONT,HORIZ_DIR,3);
                 outtextxy(240,215,"Evalueaza");
+
             }else if( x > 200 && x < 400 && y > 300 && y < 350){
                 setcolor(BLUE);
                 setlinestyle(SOLID_LINE,USERBIT_LINE,THICK_WIDTH);
