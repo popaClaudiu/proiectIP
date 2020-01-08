@@ -51,37 +51,37 @@ void afiseazaGreseli(int greseli[2][10], int j)
         {
         case EROARE_ESTE_O_LITERA_DUPA_O_CIFRA:
             setcolor(RED);
-            settextstyle(BOLD_FONT,HORIZ_DIR,1);
-            outtextxy(20,180,"Dupa o cifra nu poate urma  o litera.");
+            settextstyle(BOLD_FONT,HORIZ_DIR,3);
+            outtextxy(20,155 + 20*i ,"Dupa o cifra nu poate urma  o litera.");
             printf("La pozitia %d. Dupa o cifra nu poate urma  o litera.\n", greseli[0][i]);
             setcolor(WHITE);
             break;
 
         case EROARE_SIRUL_SE_TERMINA_BRUSC:
             setcolor(RED);
-            settextstyle(BOLD_FONT,HORIZ_DIR,1);
-            outtextxy(20,180,"Dupa o ( sirul se termina brusc.");
+            settextstyle(BOLD_FONT,HORIZ_DIR,3);
+            outtextxy(20,155 + 20*i,"Dupa ( sirul se termina brusc.");
             printf("La pozitia %d. Dupa o ( sirul se termina brusc.\n", greseli[0][i]);
             setcolor(WHITE);
             break;
         case EROARE_DUPA_PARANTEZA_NU_ESTE_OP_BINAR:
             setcolor(RED);
-            settextstyle(BOLD_FONT,HORIZ_DIR,1);
-            outtextxy(20,180,"Dupa o ) nu poate urma un numar sau paranteza se termina brusc.");
+            settextstyle(BOLD_FONT,HORIZ_DIR,3);
+            outtextxy(20,155 + 20*i,"Dupa o ) nu poate urma un numar sau paranteza se termina brusc.");
             printf("La pozitia %d. Dupa o ) nu poate urma un numar sau paranteza se termina brusc.\n", greseli[0][i]);
             setcolor(WHITE);
             break;
         case EROARE_IMPARTIRE_LA_0:
             setcolor(RED);
-            settextstyle(BOLD_FONT,HORIZ_DIR,1);
-            outtextxy(20,180,"Nu poti imparti la 0.");
+            settextstyle(BOLD_FONT,HORIZ_DIR,3);
+            outtextxy(20,155 + 20*i,"Nu poti imparti la 0.");
             printf("La pozitia %d. Nu poti imparti la 0.\n", greseli[0][i]);
             setcolor(WHITE);
             break;
         case EROARE_RADICAL_SAU_LOGARITM_DIN_NR_NEGATIV:
             setcolor(RED);
-            settextstyle(BOLD_FONT,HORIZ_DIR,1);
-            outtextxy(20,180,"Nu poti face radical din numar negativ!");
+            settextstyle(BOLD_FONT,HORIZ_DIR,3);
+            outtextxy(20,155 + 20*i,"Nu poti face radical din numar negativ!");
             printf("La pozitia %d. Nu poti face radical din numar negativ!\n", greseli[0][i]);
             setcolor(WHITE);
             break;
@@ -4850,7 +4850,7 @@ void citesteString(int window1)
                 }
                 if(cursorPosition.x>400 && cursorPosition.x<500 && cursorPosition.y>327 && cursorPosition.y<385)
                 {
-                    strcat(c,"E");
+                    strcat(c,"exp");
                     contorButoane++;
                     lungimeSir++;
                     if(contorButoane>12)
@@ -4866,7 +4866,8 @@ void citesteString(int window1)
                         nr2++;
                     if(greseala == 1){
                         greseala = 0;
-                        bar(0,170,600,240);
+                        bar(0,150,600,240);
+                        bar(5,230,590,260);
                     }
 
                     c[strlen(c)-1] = '\0';
@@ -4876,7 +4877,7 @@ void citesteString(int window1)
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>385 && cursorPosition.y<445)
                 {
-                    strcat(c,"s");
+                    strcat(c,"sin");
                     contorButoane++;
                     lungimeSir++;
                     if(contorButoane>12)
@@ -4930,7 +4931,7 @@ void citesteString(int window1)
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>445 && cursorPosition.y<505)
                 {
-                    strcat(c,"c");
+                    strcat(c,"cos");
                     contorButoane++;
                     lungimeSir++;
                     if(contorButoane>12)
@@ -4939,7 +4940,7 @@ void citesteString(int window1)
                 }
                 if(cursorPosition.x>100 && cursorPosition.x<200 && cursorPosition.y>445 && cursorPosition.y<505)
                 {
-                    strcat(c,"R");
+                    strcat(c,"rad");
                     contorButoane++;
                     lungimeSir++;
                     if(contorButoane>12)
@@ -4984,7 +4985,7 @@ void citesteString(int window1)
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>505 && cursorPosition.y<565)
                 {
-                    strcat(c,"l");
+                    strcat(c,"log");
                     contorButoane++;
                     lungimeSir++;
                     if(contorButoane>12)
@@ -4993,12 +4994,11 @@ void citesteString(int window1)
                 }
                 if(cursorPosition.x>100 && cursorPosition.x<200 && cursorPosition.y>505 && cursorPosition.y<565)
                 {
-                    strcat(c,"X");
+                    strcat(c,"x");
                     contorButoane++;
                     lungimeSir++;
                     if(contorButoane>12)
-                        nr2++;
-                    //cinTastatura(window1,c,nr2,lungimeSir);
+                    cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>200 && cursorPosition.x<300 && cursorPosition.y>505 && cursorPosition.y<565)
                 {
@@ -5038,7 +5038,7 @@ void citesteString(int window1)
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>565 && cursorPosition.y<625)
                 {
-                    strcat(c,"P");
+                    strcat(c,"q");
                     contorButoane++;
                     lungimeSir++;
                     if(contorButoane>12)
@@ -5149,7 +5149,7 @@ void citesteString(int window1)
                 }
                 if(cursorPosition.x>400 && cursorPosition.x<500 && cursorPosition.y>327 && cursorPosition.y<385)
                 {
-                    strcat(c2,"E");
+                    strcat(c2,"exp");
                     contorButoane2++;
                     lungimeSir2++;
                     if(contorButoane2>12)
@@ -5165,11 +5165,12 @@ void citesteString(int window1)
                         nr3++;
                     c[strlen(c)] = '\0';
                     strcpy(E.expresie,c);
+                    bar(5,230,590,260);
                     //cinTastatura2(window1,c2,nr3,lungimeSir2);
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>385 && cursorPosition.y<445)
                 {
-                    strcat(c2,"s");
+                    strcat(c2,"sin");
                     contorButoane2++;
                     lungimeSir2++;
                     if(contorButoane2>12)
@@ -5223,7 +5224,7 @@ void citesteString(int window1)
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>445 && cursorPosition.y<505)
                 {
-                    strcat(c2,"c");
+                    strcat(c2,"cos");
                     contorButoane2++;
                     lungimeSir2++;
                     if(contorButoane2>12)
@@ -5232,7 +5233,7 @@ void citesteString(int window1)
                 }
                 if(cursorPosition.x>100 && cursorPosition.x<200 && cursorPosition.y>445 && cursorPosition.y<505)
                 {
-                    strcat(c2,"R");
+                    strcat(c2,"rad");
                     contorButoane2++;
                     lungimeSir2++;
                     if(contorButoane2>12)
@@ -5277,7 +5278,7 @@ void citesteString(int window1)
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>505 && cursorPosition.y<565)
                 {
-                    strcat(c2,"l");
+                    strcat(c2,"log");
                     contorButoane2++;
                     lungimeSir2++;
                     if(contorButoane2>12)
@@ -5286,12 +5287,12 @@ void citesteString(int window1)
                 }
                 if(cursorPosition.x>100 && cursorPosition.x<200 && cursorPosition.y>505 && cursorPosition.y<565)
                 {
-                    strcat(c2,"X");
+                    strcat(c2,"x");
                     contorButoane2++;
                     lungimeSir2++;
                     if(contorButoane2>12)
                         nr3++;
-                    //cinTastatura2(window1,c2,nr3,lungimeSir2);
+                    cinTastatura2(window1,c2,nr3,lungimeSir2);
                 }
                 if(cursorPosition.x>200 && cursorPosition.x<300 && cursorPosition.y>505 && cursorPosition.y<565)
                 {
@@ -5331,7 +5332,7 @@ void citesteString(int window1)
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>565 && cursorPosition.y<625)
                 {
-                    strcat(c2,"P");
+                    strcat(c2,"q");
                     contorButoane2++;
                     lungimeSir2++;
                     if(contorButoane2>12)
@@ -5365,7 +5366,7 @@ void citesteString(int window1)
                         nr3++;
                     cinTastatura2(window1,c2,nr3,lungimeSir2);
                 }
-                /*if(cursorPosition.x>400 && cursorPosition.x<500 && cursorPosition.y>565 && cursorPosition.y<625)
+                if(cursorPosition.x>400 && cursorPosition.x<500 && cursorPosition.y>565 && cursorPosition.y<625)
                 {
                     strcat(c2,"=");
                     contorButoane2++;
@@ -5373,7 +5374,7 @@ void citesteString(int window1)
                     if(contorButoane2>12)
                         nr3++;
                     cinTastatura(window1,c2,nr3,lungimeSir2);
-                }*/
+                }
                 if(cursorPosition.x>500 && cursorPosition.x<600 && cursorPosition.y>565 && cursorPosition.y<625)
                 {
                     strcat(c2,"+");
@@ -5396,11 +5397,17 @@ void citesteString(int window1)
                     apasatAfis2 = 0;
                 }else{
                     formeazaExpresia(E);
-                    int rezultat = (int) valoareFunctiei(E,0);
-                    // 0,235,600,265
+                    E.x = atoi(c2);
+                    float rezultat = valoareFunctiei(E,E.x);
 
                     char rezultat1[255];
-                    itoa(rezultat,rezultat1,10);
+
+                    if(esteIntreg(rezultat)){
+                        int rezultatIntreg = (int) rezultat;
+                        itoa(rezultatIntreg,rezultat1,10);
+                    }else{
+                       floatToString(rezultat,rezultat1);
+                    }
 
                     outtextxy(300,240,rezultat1);
 
