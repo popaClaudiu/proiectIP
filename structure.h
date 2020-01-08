@@ -725,9 +725,10 @@ void floatToString(float x , char* sir)
 
     parte_rationala = x;
     strcat(sir,".");
-       parte_rationala *= 100;
-        itoa((int)parte_rationala%100, cifra, 10);
-        strcat(sir,cifra);
+
+    parte_rationala *= 100;
+    itoa((unsigned int)parte_rationala%100, cifra, 10);
+    strcat(sir,cifra);
 
 
 }
