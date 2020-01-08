@@ -52,7 +52,7 @@ void afiseazaGreseli(int greseli[2][10], int j)
         case EROARE_ESTE_O_LITERA_DUPA_O_CIFRA:
             setcolor(RED);
             settextstyle(BOLD_FONT,HORIZ_DIR,1);
-            outtextxy(20,20,"Dupa o cifra nu poate urma  o litera.");
+            outtextxy(20,180,"Dupa o cifra nu poate urma  o litera.");
             printf("La pozitia %d. Dupa o cifra nu poate urma  o litera.\n", greseli[0][i]);
             setcolor(WHITE);
             break;
@@ -60,28 +60,28 @@ void afiseazaGreseli(int greseli[2][10], int j)
         case EROARE_SIRUL_SE_TERMINA_BRUSC:
             setcolor(RED);
             settextstyle(BOLD_FONT,HORIZ_DIR,1);
-            outtextxy(20,20,"Dupa o ( sirul se termina brusc.");
+            outtextxy(20,180,"Dupa o ( sirul se termina brusc.");
             printf("La pozitia %d. Dupa o ( sirul se termina brusc.\n", greseli[0][i]);
             setcolor(WHITE);
             break;
         case EROARE_DUPA_PARANTEZA_NU_ESTE_OP_BINAR:
             setcolor(RED);
             settextstyle(BOLD_FONT,HORIZ_DIR,1);
-            outtextxy(20,20,"Dupa o ) nu poate urma un numar sau paranteza se termina brusc.");
+            outtextxy(20,180,"Dupa o ) nu poate urma un numar sau paranteza se termina brusc.");
             printf("La pozitia %d. Dupa o ) nu poate urma un numar sau paranteza se termina brusc.\n", greseli[0][i]);
             setcolor(WHITE);
             break;
         case EROARE_IMPARTIRE_LA_0:
             setcolor(RED);
             settextstyle(BOLD_FONT,HORIZ_DIR,1);
-            outtextxy(20,20,"Nu poti imparti la 0.");
+            outtextxy(20,180,"Nu poti imparti la 0.");
             printf("La pozitia %d. Nu poti imparti la 0.\n", greseli[0][i]);
             setcolor(WHITE);
             break;
         case EROARE_RADICAL_SAU_LOGARITM_DIN_NR_NEGATIV:
             setcolor(RED);
             settextstyle(BOLD_FONT,HORIZ_DIR,1);
-            outtextxy(20,20,"Nu poti face radical din numar negativ!");
+            outtextxy(20,180,"Nu poti face radical din numar negativ!");
             printf("La pozitia %d. Nu poti face radical din numar negativ!\n", greseli[0][i]);
             setcolor(WHITE);
             break;
@@ -4787,9 +4787,9 @@ void citesteString(int window1)
             }
         }
         GetCursorPos(&cursorPosition);
-        if(GetAsyncKeyState(VK_LBUTTON))
+        if(ismouseclick(WM_LBUTTONDOWN))
         {
-            clearmouseclick(VK_LBUTTON);
+            clearmouseclick(WM_LBUTTONDOWN);
             setcolor(WHITE);
             if(apasatAfis1==0 && apasatAfis2==0)
             {
@@ -4864,6 +4864,11 @@ void citesteString(int window1)
                     lungimeSir=lungimeSir+3;
                     if(contorButoane>12)
                         nr2++;
+                    if(greseala == 1){
+                        greseala = 0;
+                        bar(0,170,600,240);
+                    }
+
                     c[strlen(c)-1] = '\0';
                     strcpy(E.expresie,c);
                     cout<<E.expresie<<endl;
