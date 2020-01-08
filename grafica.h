@@ -13,6 +13,7 @@ struct punct
 {
     int x,y;
 };
+bool esteInegalitateSauEgalitate(char *expresie);
 void pornesteProgramul(int window);
 void patrat(int x,int y,int lat)
 {
@@ -5450,10 +5451,18 @@ void citesteString(int window1)
                     char rezultat1[255];
                     rezultat1[0]='\0';
                     if(diferitDeInfinit(rezultat)){
-                        if(esteIntreg(rezultat)){
+                        cout<<strstr(E.expresie,"><=#");
+                        if(esteInegalitateSauEgalitate(E.expresie)){
+                            if(rezultat == 0){
+                                strcpy(rezultat1,"FALS");
+                            }else{
+                                strcpy(rezultat1,"ADEVARAT");
+                            }
+                        }else if(esteIntreg(rezultat)){
                             int rezultatIntreg = (int) rezultat;
                             itoa(rezultatIntreg,rezultat1,10);
-                        }else{
+                        }
+                        else{
                            floatToString(rezultat,rezultat1);
                         }
                     }else{
@@ -5537,7 +5546,19 @@ void deseneazaEcranulDeStart(){
     outtextxy(240,315,"Tutorial");
 }
 
+bool esteInegalitateSauEgalitate(char *expresie)
+{
+    int contor = 0;
+    for(int i = 0; i < strlen(expresie); i++){
+        if(strchr("=><#",expresie[i])){
+            contor++;
+        }
+    }
 
+    if(contor == 1) return true;
+    return false;
+
+}
 void pornesteProgramul(int window)
 {
     deseneazaEcranulDeStart();
