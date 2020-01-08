@@ -2092,59 +2092,6 @@ void cinTastatura(int window1,char c[10001],int nr2,int lungimeSir)
             Trasare30careuri(window1,c[i],numarCasuta);
             numarCasuta++;
         }
-
-        /*if(c[i]=='l' && c[i+1]=='n')
-        {
-            Trasare30careuri(window1,c[i],numarCasuta);
-            numarCasuta++;
-        }
-        //if(c[i-1]=='l' && c[i]=='n')
-          //  numarCasuta--;
-        if(c[i]=='P' && c[i+1]=='I')
-        {
-            Trasare30careuri(window1,c[i],numarCasuta);
-            numarCasuta++;
-        }
-        //if(c[i-1]=='P' && c[i]=='I')
-          //  numarCasuta--;
-
-        if(c[i]=='R' && c[i+1]=='A' && c[i+2]=='D')
-        {
-            Trasare30careuri(window1,c[i],numarCasuta);
-            numarCasuta++;
-        }
-        //if(c[i-1]=='R' && c[i]=='A' && c[i+1]=='D')
-          //  numarCasuta--;
-        //if(c[i-2]=='R' && c[i-1]=='A' && c[i]=='D')
-          //  numarCasuta--;
-        if(c[i]=='s' && c[i+1]=='i' && c[i+2]=='n')
-        {
-            Trasare30careuri(window1,c[i],numarCasuta);
-            numarCasuta++;
-        }
-        //if(c[i-1]=='s' && c[i]=='i' && c[i+1]=='n')
-          //  numarCasuta--;
-        //if(c[i-2]=='s' && c[i-1]=='i' && c[i]=='n')
-          //  numarCasuta--;
-        if(c[i]=='c' && c[i+1]=='o' && c[i+2]=='s')
-        {
-            Trasare30careuri(window1,c[i],numarCasuta);
-            numarCasuta++;
-        }
-        //if(c[i-1]=='c' && c[i]=='o' && c[i+1]=='s')
-          //  numarCasuta--;
-        //if(c[i-2]=='c' && c[i-1]=='o' && c[i]=='s')
-          //  numarCasuta--;
-        if(c[i]=='E' && c[i+1]=='x' && c[i+2]=='p')
-        {
-            Trasare30careuri(window1,c[i],numarCasuta);
-            numarCasuta++;
-        }
-        //if(c[i-1]=='E' && c[i]=='x' && c[i+1]=='p')
-          //  numarCasuta--;
-        //if(c[i-2]=='E' && c[i-1]=='x' && c[i]=='p')
-          //  numarCasuta--;
-        }*/
     }
 }
 
@@ -5697,6 +5644,12 @@ void deseneazaEcranulDeStart(){
 
 }
 
+bool hoverPeButonulEvaluare(int x, int y){
+    return (x > 200 && x < 400 && y > 200 && y < 250);
+}
+bool hoverPeButonulTutorial(int x, int y){
+    return (x > 200 && x < 400 && y > 300 && y < 350);
+}
 void pornesteProgramul(int window)
 {
     int schimbare = 0;
@@ -5739,7 +5692,7 @@ void pornesteProgramul(int window)
             }
         }
 
-            if(x > 200 && x < 400 && y > 200 && y < 250){
+            if(hoverPeButonulEvaluare(x,y) && schimbare == 0){
                 setcolor(BLUE);
                 setlinestyle(SOLID_LINE,USERBIT_LINE,THICK_WIDTH);
                 rectangle(200,200,400,250);
@@ -5756,7 +5709,7 @@ void pornesteProgramul(int window)
                 }
                 schimbare = 1;
 
-            }else if( x > 200 && x < 400 && y > 300 && y < 350){
+            }else if(hoverPeButonulTutorial(x,y) && schimbare == 0){
                 setcolor(BLUE);
                 setlinestyle(SOLID_LINE,USERBIT_LINE,THICK_WIDTH);
                 rectangle(200,300,400,350);
@@ -5774,7 +5727,7 @@ void pornesteProgramul(int window)
                 rectangle(350,400,390,450);
                 schimbare = 1;
                 setcolor(WHITE);
-            }else if(schimbare){
+            }else if(schimbare && !hoverPeButonulEvaluare(x,y) && !hoverPeButonulTutorial(x,y)){
                 setcolor(WHITE);
                 schimbare = 0;
                 deseneazaEcranulDeStart();
