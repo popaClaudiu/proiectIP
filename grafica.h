@@ -5549,7 +5549,10 @@ void citesteString(int window1)
 }
 
 void incepeTutorialul(int window){
-    readimagefile("assets\\evaluator.jpg",100,100,500,500);
+    if(instrusctiuniRO)
+        readimagefile("assets\\evaluator.jpg",100,100,500,500);
+    else
+        readimagefile("assets\\evaluator-en.jpg",100,100,500,500);
     readimagefile("assets\\right-arrow.jpg",510,250,600,300);
     readimagefile("assets\\exit.jpg", 10,10,40,40);
 
