@@ -40,6 +40,56 @@ void dreptunghi(int x,int y,int lat,int inalt)
 }*/
 
 
+/**
+ * Afiseaza greselile gasite in expresia functiei
+*/
+void afiseazaGreseli(int greseli[2][10], int j)
+{
+    for (int i = 0; i < j; i++)
+    {
+        switch (greseli[1][i])
+        {
+        case EROARE_ESTE_O_LITERA_DUPA_O_CIFRA:
+            setcolor(RED);
+            settextstyle(BOLD_FONT,HORIZ_DIR,1);
+            outtextxy(20,20,"Dupa o cifra nu poate urma  o litera.");
+            printf("La pozitia %d. Dupa o cifra nu poate urma  o litera.\n", greseli[0][i]);
+            setcolor(WHITE);
+            break;
+
+        case EROARE_SIRUL_SE_TERMINA_BRUSC:
+            setcolor(RED);
+            settextstyle(BOLD_FONT,HORIZ_DIR,1);
+            outtextxy(20,20,"Dupa o ( sirul se termina brusc.");
+            printf("La pozitia %d. Dupa o ( sirul se termina brusc.\n", greseli[0][i]);
+            setcolor(WHITE);
+            break;
+        case EROARE_DUPA_PARANTEZA_NU_ESTE_OP_BINAR:
+            setcolor(RED);
+            settextstyle(BOLD_FONT,HORIZ_DIR,1);
+            outtextxy(20,20,"Dupa o ) nu poate urma un numar sau paranteza se termina brusc.");
+            printf("La pozitia %d. Dupa o ) nu poate urma un numar sau paranteza se termina brusc.\n", greseli[0][i]);
+            setcolor(WHITE);
+            break;
+        case EROARE_IMPARTIRE_LA_0:
+            setcolor(RED);
+            settextstyle(BOLD_FONT,HORIZ_DIR,1);
+            outtextxy(20,20,"Nu poti imparti la 0.");
+            printf("La pozitia %d. Nu poti imparti la 0.\n", greseli[0][i]);
+            setcolor(WHITE);
+            break;
+        case EROARE_RADICAL_SAU_LOGARITM_DIN_NR_NEGATIV:
+            setcolor(RED);
+            settextstyle(BOLD_FONT,HORIZ_DIR,1);
+            outtextxy(20,20,"Nu poti face radical din numar negativ!");
+            printf("La pozitia %d. Nu poti face radical din numar negativ!\n", greseli[0][i]);
+            setcolor(WHITE);
+            break;
+        }
+    }
+}
+
+
 void Trasare30careuri(int window1,char key,int c1)
 {
     int i,j,nr,nr2,page,asciiValue,v[101];
@@ -4621,6 +4671,12 @@ void citesteString(int window1)
 
     while(1)
     {
+        strcpy(E.expresie,c);
+
+        bar(10,110,590,140);
+        settextstyle(BOLD_FONT,HORIZ_DIR,2);
+        outtextxy(15,115,E.expresie);
+
         rectangle(0,300,600,600);
         rectangle(0,100,600,150);
         //rectangle(100,200,500,300);
@@ -4639,19 +4695,16 @@ void citesteString(int window1)
             settextstyle(BOLD_FONT,HORIZ_DIR,2);
             outtextxy(150,151,"Citeste Necunoscuta X");
             rectangle(0,172,600,200);//Dreptunghide sub textul Citeste Necunoscuta X
-            for(i=50; i<=600; i=i+50)
-                line(i,172,i,200);
+
         }
-        if(apasatAfis2>0)
+        if(apasatAfis2>0 && greseala == 0)
         {
             settextstyle(BOLD_FONT,HORIZ_DIR,2);
             outtextxy(150,205,"Valoare Functie/f(x)");
             rectangle(0,235,600,265);//Dreptunghi sub textul Valoare Functie/f(x)
-            for(i=50; i<=600; i=i+50)
-                line(i,235,i,265);
+
         }
-        for(i=50; i<=600; i=i+50)
-            line(i,100,i,150);
+
         //for(i=25; i<=400; i=i+25)
         //  line(i+100,200,i+100,300);
         nr=1;
@@ -4736,16 +4789,20 @@ void citesteString(int window1)
         GetCursorPos(&cursorPosition);
         if(GetAsyncKeyState(VK_LBUTTON))
         {
+            clearmouseclick(VK_LBUTTON);
+            setcolor(WHITE);
             if(apasatAfis1==0 && apasatAfis2==0)
             {
                 if(cursorPosition.x>500 && cursorPosition.x<600 && cursorPosition.y>270 && cursorPosition.y<326)
                 {
-                    apasatAfis2++;
-                    settextstyle(BOLD_FONT,HORIZ_DIR,2);
-                    outtextxy(150,205,"Valoare Functie/f(x)");
-                    rectangle(0,235,600,265);//Dreptunghi sub textul Valoare Functie/f(x)
-                    for(i=50; i<=600; i=i+50)
-                        line(i,235,i,265);
+                    if(greseala == 0){
+                        apasatAfis2++;
+                        settextstyle(BOLD_FONT,HORIZ_DIR,2);
+                        outtextxy(150,205,"Valoare Functie/f(x)");
+                        rectangle(0,235,600,265);//Dreptunghi sub textul Valoare Functie/f(x)
+
+
+                    }
                 }
                 if(cursorPosition.x>400 && cursorPosition.x<500 && cursorPosition.y>270 && cursorPosition.y<326 && apasatAfis2==0)
                 {
@@ -4753,8 +4810,7 @@ void citesteString(int window1)
                     settextstyle(BOLD_FONT,HORIZ_DIR,2);
                     outtextxy(150,151,"Citeste Necunoscuta X");
                     rectangle(0,172,600,200);//Dreptunghide sub textul Citeste Necunoscuta X
-                    for(i=50; i<=600; i=i+50)
-                        line(i,172,i,200);
+
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>300 && cursorPosition.y<390)
                 {
@@ -4763,7 +4819,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>100 && cursorPosition.x<200 && cursorPosition.y>300 && cursorPosition.y<385)
                 {
@@ -4772,7 +4828,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>200 && cursorPosition.x<300 && cursorPosition.y>300 && cursorPosition.y<385)
                 {
@@ -4781,7 +4837,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>300 && cursorPosition.x<400 && cursorPosition.y>300 && cursorPosition.y<385)
                 {
@@ -4790,7 +4846,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>400 && cursorPosition.x<500 && cursorPosition.y>327 && cursorPosition.y<385)
                 {
@@ -4799,16 +4855,19 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
-                if(cursorPosition.x>500 && cursorPosition.x<600 && cursorPosition.y>327 && cursorPosition.y<385)
+                if(cursorPosition.x>500 && cursorPosition.x<600 && cursorPosition.y>327 && cursorPosition.y<385 && apasatAfis2 == 0)
                 {
-                    strcat(c,"Del");
+                    //strcat(c,"Del");
                     contorButoane++;
                     lungimeSir=lungimeSir+3;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    c[strlen(c)-1] = '\0';
+                    strcpy(E.expresie,c);
+                    cout<<E.expresie<<endl;
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>385 && cursorPosition.y<445)
                 {
@@ -4817,7 +4876,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>100 && cursorPosition.x<200 && cursorPosition.y>385 && cursorPosition.y<445)
                 {
@@ -4826,7 +4885,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>200 && cursorPosition.x<300 && cursorPosition.y>385 && cursorPosition.y<445)
                 {
@@ -4835,7 +4894,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>300 && cursorPosition.x<400 && cursorPosition.y>385 && cursorPosition.y<445)
                 {
@@ -4844,7 +4903,7 @@ void citesteString(int window1)
                     contorButoane++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>400 && cursorPosition.x<500 && cursorPosition.y>385 && cursorPosition.y<445)
                 {
@@ -4853,7 +4912,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>500 && cursorPosition.x<600 && cursorPosition.y>385 && cursorPosition.y<445)
                 {
@@ -4862,7 +4921,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>445 && cursorPosition.y<505)
                 {
@@ -4871,7 +4930,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>100 && cursorPosition.x<200 && cursorPosition.y>445 && cursorPosition.y<505)
                 {
@@ -4880,7 +4939,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>200 && cursorPosition.x<300 && cursorPosition.y>445 && cursorPosition.y<505)
                 {
@@ -4889,7 +4948,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>300 && cursorPosition.x<400 && cursorPosition.y>445 && cursorPosition.y<505)
                 {
@@ -4898,7 +4957,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>400 && cursorPosition.x<500 && cursorPosition.y>445 && cursorPosition.y<505)
                 {
@@ -4907,7 +4966,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>500 && cursorPosition.x<600 && cursorPosition.y>445 && cursorPosition.y<505)
                 {
@@ -4916,7 +4975,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>505 && cursorPosition.y<565)
                 {
@@ -4925,7 +4984,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>100 && cursorPosition.x<200 && cursorPosition.y>505 && cursorPosition.y<565)
                 {
@@ -4934,7 +4993,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>200 && cursorPosition.x<300 && cursorPosition.y>505 && cursorPosition.y<565)
                 {
@@ -4943,7 +5002,7 @@ void citesteString(int window1)
                     contorButoane++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>300 && cursorPosition.x<400 && cursorPosition.y>505 && cursorPosition.y<565)
                 {
@@ -4952,7 +5011,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>400 && cursorPosition.x<500 && cursorPosition.y>505 && cursorPosition.y<565)
                 {
@@ -4961,7 +5020,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>500 && cursorPosition.x<600 && cursorPosition.y>505 && cursorPosition.y<565)
                 {
@@ -4970,7 +5029,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>565 && cursorPosition.y<625)
                 {
@@ -4979,7 +5038,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>100 && cursorPosition.x<200 && cursorPosition.y>565 && cursorPosition.y<625)
                 {
@@ -4988,7 +5047,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>200 && cursorPosition.x<300 && cursorPosition.y>565 && cursorPosition.y<625)
                 {
@@ -4997,7 +5056,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>300 && cursorPosition.x<400 && cursorPosition.y>565 && cursorPosition.y<625)
                 {
@@ -5006,7 +5065,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>400 && cursorPosition.x<500 && cursorPosition.y>565 && cursorPosition.y<625)
                 {
@@ -5015,7 +5074,7 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
                 if(cursorPosition.x>500 && cursorPosition.x<600 && cursorPosition.y>565 && cursorPosition.y<625)
                 {
@@ -5024,19 +5083,20 @@ void citesteString(int window1)
                     lungimeSir++;
                     if(contorButoane>12)
                         nr2++;
-                    cinTastatura(window1,c,nr2,lungimeSir);
+                    //cinTastatura(window1,c,nr2,lungimeSir);
                 }
             }
             if(apasatAfis1>0 && apasatAfis2==0)
             {
                 if(cursorPosition.x>500 && cursorPosition.x<600 && cursorPosition.y>270 && cursorPosition.y<326)
                 {
-                    apasatAfis2++;
-                    settextstyle(BOLD_FONT,HORIZ_DIR,2);
-                    outtextxy(150,205,"Valoare Functie/f(x)");
-                    rectangle(0,235,600,265);//Dreptunghi sub textul Valoare Functie/f(x)
-                    for(i=50; i<=600; i=i+50)
-                        line(i,235,i,265);
+                     if(greseala == 0){
+                        apasatAfis2++;
+                        settextstyle(BOLD_FONT,HORIZ_DIR,2);
+                        outtextxy(150,205,"Valoare Functie/f(x)");
+                        rectangle(0,235,600,265);//Dreptunghi sub textul Valoare Functie/f(x)
+
+                    }
                 }
                 if(cursorPosition.x>400 && cursorPosition.x<500 && cursorPosition.y>270 && cursorPosition.y<326)
                 {
@@ -5044,8 +5104,7 @@ void citesteString(int window1)
                     settextstyle(BOLD_FONT,HORIZ_DIR,2);
                     outtextxy(150,151,"Citeste Necunoscuta X");
                     rectangle(0,172,600,200);//Dreptunghide sub textul Citeste Necunoscuta X
-                    for(i=50; i<=600; i=i+50)
-                        line(i,172,i,200);
+
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>300 && cursorPosition.y<390)
                 {
@@ -5099,7 +5158,9 @@ void citesteString(int window1)
                     lungimeSir2=lungimeSir2+3;
                     if(contorButoane2>12)
                         nr3++;
-                    cinTastatura2(window1,c2,nr3,lungimeSir2);
+                    c[strlen(c)] = '\0';
+                    strcpy(E.expresie,c);
+                    //cinTastatura2(window1,c2,nr3,lungimeSir2);
                 }
                 if(cursorPosition.x>0 && cursorPosition.x<100 && cursorPosition.y>385 && cursorPosition.y<445)
                 {
@@ -5218,15 +5279,15 @@ void citesteString(int window1)
                         nr3++;
                     cinTastatura2(window1,c2,nr3,lungimeSir2);
                 }
-                /*if(cursorPosition.x>100 && cursorPosition.x<200 && cursorPosition.y>505 && cursorPosition.y<565)
+                if(cursorPosition.x>100 && cursorPosition.x<200 && cursorPosition.y>505 && cursorPosition.y<565)
                 {
                     strcat(c2,"X");
                     contorButoane2++;
                     lungimeSir2++;
                     if(contorButoane2>12)
                         nr3++;
-                    cinTastatura2(window1,c2,nr3,lungimeSir2);
-                }*/
+                    //cinTastatura2(window1,c2,nr3,lungimeSir2);
+                }
                 if(cursorPosition.x>200 && cursorPosition.x<300 && cursorPosition.y>505 && cursorPosition.y<565)
                 {
                     strcat(c2,"1");
@@ -5321,17 +5382,31 @@ void citesteString(int window1)
             if(apasatAfis2>0)
             {
                 strcpy(E.expresie,c);
-                formeazaExpresia(E);
+                valideazaFunctia(E);
 
-                int rezultat = (int) valoareFunctiei(E,0);
-                // 0,235,600,265
+                if(greseala == 1)
+                {
+                    setfillstyle(SOLID_FILL,BLACK);
+                    bar(0,205,600,268);
+                    apasatAfis2 = 0;
+                }else{
+                    formeazaExpresia(E);
+                    int rezultat = (int) valoareFunctiei(E,0);
+                    // 0,235,600,265
 
-                char rezultat1[255];
-                itoa(rezultat,rezultat1,10);
+                    char rezultat1[255];
+                    itoa(rezultat,rezultat1,10);
 
-                outtextxy(300,20,rezultat1);
+                    outtextxy(300,240,rezultat1);
 
-                apasatAfis2 = 0;
+                    apasatAfis2 = 0;
+                }
+            }
+
+            if(greseala == 1)
+            {
+                setfillstyle(SOLID_FILL,BLACK);
+                bar(0,205,600,265);
             }
         }
         delay(5);
@@ -5380,12 +5455,10 @@ void incepeTutorialul(int window){
 }
 
 void deseneazaEcranulDeStart(){
-  int width, height;
-    width = getmaxwidth();
-    height = getmaxheight();
 
+    readimagefile("bg.jpg",0,0,600, 600);
     settextstyle(BOLD_FONT,HORIZ_DIR,3);
-    outtextxy(170,100,"Evaluator Matematic");
+    outtextxy(170,150,"Evaluator Matematic");
 
     setlinestyle(SOLID_LINE,USERBIT_LINE,THICK_WIDTH);
     rectangle(200,200,400,250);
@@ -5397,9 +5470,6 @@ void deseneazaEcranulDeStart(){
     rectangle(200,300,400,350);
     settextstyle(BOLD_FONT,HORIZ_DIR,3);
     outtextxy(240,315,"Tutorial");
-
-    settextstyle(BOLD_FONT,HORIZ_DIR,1);
-    outtextxy(30,500, "Proiect realizat de: Claudiu Popa si Victor Rosca");
 }
 
 
