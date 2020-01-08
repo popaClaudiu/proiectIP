@@ -41,10 +41,8 @@ int main()
     for(i=50; i<=600; i=i+50)
         line(i,172,i,200);*/
 
-
-    //citesteString(window1);
-
     getch();
     closegraph();
+
     return 0;
 }

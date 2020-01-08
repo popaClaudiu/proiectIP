@@ -171,7 +171,6 @@ void transformaInVector(functie &E)
 
 /**
  * Evidentiaza variabilele din expresie
- * Pune
 */
 void evidentiazaVariabilele(functie &E)
 {
@@ -197,7 +196,6 @@ void evidentiazaVariabilele(functie &E)
 /**
  * Pune zerouri in expresie
  * Eg: (- => (0+ , (+ => (0+
- *
 */
 void puneZerouriInExpresie(functie &E)
 {
@@ -560,6 +558,7 @@ void valideazaFunctia(functie &E)
     char s[255];
     strcpy(s, E.expresie);
     int n = strlen(s), greseli[2][10], nrGreseli = 0, i;
+
     for (i = 0; i < 10; i++)
     {
         greseli[0][i] = 0;

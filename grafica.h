@@ -4686,17 +4686,17 @@ void citesteString(int window1)
         settextstyle(BOLD_FONT,HORIZ_DIR,3);
         outtextxy(10,272,"Reset");
 
-        rectangle(0,100,600,150);
+        rectangle(0,100,600,140);
         //rectangle(100,200,500,300);
         settextstyle(BOLD_FONT,HORIZ_DIR,4);//Fontu,Directia,Marimea
         outtextxy(150,60,"Introdu Functia");//Afisare text : "Introdu Functia"
 
         rectangle(400,270,600,300);
         line(500,270,500,300);
-        settextstyle(BOLD_FONT,HORIZ_DIR,3);
-        outtextxy(417,275,"Afis1");
-        settextstyle(BOLD_FONT,HORIZ_DIR,3);
-        outtextxy(517,275,"Afis2");
+        settextstyle(BOLD_FONT,HORIZ_DIR,2);
+        outtextxy(417,275,"Nec.");
+        settextstyle(BOLD_FONT,HORIZ_DIR,2);
+        outtextxy(517,275,"Rez.");
 
         if(apasatAfis1>0)
         {
@@ -4714,8 +4714,6 @@ void citesteString(int window1)
         }
         if(resetat){
             resetat = 0;
-            //reseteazaCalculatorul();
-            cout<<"RESETEAZA CALCULATORUL"<<endl;
             bar(0,150,600,271);
             citesteString(window1);
         }

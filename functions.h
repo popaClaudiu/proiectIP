@@ -105,7 +105,7 @@ float putere(float x, float y)
             std::cout << "incepem sa inmultim"
                       << "\n";
             yi = trunc(y);
-            std::cout<<x<<" si "<<yi<<"\n";
+            std::cout << x << " si " << yi << "\n";
             p = 1;
             for (i = 1; i <= (yi / 2); i++)
             {
@@ -117,7 +117,7 @@ float putere(float x, float y)
             if (!estePar(yi))
             {
                 p *= x;
-                std::cout <<"Impar p=" << p;
+                std::cout << "Impar p=" << p;
             }
 
             return p;
@@ -231,29 +231,31 @@ bool esteIntreg(float v)
 int tipCaracter(char c)
 {
     int tip = 100;
-    if (strchr("0123456789.", c))
+    if (c != '\0')
     {
-        tip = 1;
-    }
-    else if (strchr("cosinlgexpabrdt", c))
-    {
-        tip = 2;
-    }
-    else
-    {
-        char operatori[] = "()+-*/^Xq=#<>";
-        int i = 0;
-        while (operatori[i])
+        if (strchr("0123456789.", c))
         {
-            if (c == operatori[i])
+            tip = 1;
+        }
+        else if (strchr("cosinlgexpabrdt", c))
+        {
+            tip = 2;
+        }
+        else
+        {
+            char operatori[] = "()+-*/^=#<>Xq";
+            int i = 0;
+            while (operatori[i])
             {
-                tip = 3 + i;
-                break;
+                if (c == operatori[i])
+                {
+                    tip = 3 + i;
+                    break;
+                }
+                i++;
             }
-            i++;
         }
     }
-
     return tip;
 }
 
@@ -296,7 +298,8 @@ bool nuEsteOperatorulExponent(char *expresie, int i)
 /**
  * Deplaseaza sirul de la o pozitie data pana la o pozitie data
 */
-void desplaseazaSirul(char* sir, int start, int stop){
+void desplaseazaSirul(char *sir, int start, int stop)
+{
     for (int i = start; i > stop; i--)
     {
         sir[i] = sir[i - 1];
