@@ -710,7 +710,7 @@ void floatToString(float x , char* sir)
 {
     int parte_intreaga,contor=0;
     float parte_rationala;
-    char cifra[3];
+    char cifra[100];
     parte_intreaga = (int) x;
 
     while(parte_intreaga)
@@ -719,8 +719,15 @@ void floatToString(float x , char* sir)
       strcat(sir,cifra);
       parte_intreaga /= 10;
     }
+    reverse(sir,strlen(sir));
 
-    if(parte_intreaga == 0) strcat(sir,"0");
+    if((int)x == 0){
+        if(x<0){
+            strcat(sir,"-0");
+        }else{
+            strcat(sir,"0");
+        }
+    }
     if(x<0) x = x*(-1);
 
     int x_rezerva = (int)(x * 100);
