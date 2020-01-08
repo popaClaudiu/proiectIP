@@ -5401,7 +5401,7 @@ void citesteString(int window1)
                     float rezultat = valoareFunctiei(E,E.x);
 
                     char rezultat1[255];
-
+                    rezultat1[0]='\0';
                     if(esteIntreg(rezultat)){
                         int rezultatIntreg = (int) rezultat;
                         itoa(rezultatIntreg,rezultat1,10);
@@ -5409,6 +5409,7 @@ void citesteString(int window1)
                        floatToString(rezultat,rezultat1);
                     }
 
+                    bar(10,240,590,260);
                     outtextxy(300,240,rezultat1);
 
                     apasatAfis2 = 0;
