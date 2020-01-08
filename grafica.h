@@ -4689,7 +4689,7 @@ void citesteString(int window1)
         outtextxy(10,272,"Reset");
 
         // Add exit button
-        readimagefile("exit.jpg", 10,10,40,40);
+        readimagefile("assets\\exit.jpg", 10,10,40,40);
 
 
         rectangle(0,100,600,140);
@@ -4842,7 +4842,7 @@ void citesteString(int window1)
                 }
 
                 if(cursorPosition.x > 10 && cursorPosition.x < 70 && cursorPosition.y > 10 && cursorPosition.y < 70){
-                    PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\click.wav",NULL,SND_SYNC);
+                    PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\assets\\click.wav",NULL,SND_SYNC);
                     setfillstyle(SOLID_FILL,BLACK);
                     bar(0,0,600,600);
                     cout<<"EXIT";
@@ -5160,7 +5160,7 @@ void citesteString(int window1)
             if(apasatAfis1>0 && apasatAfis2==0)
             {
                 if(cursorPosition.x > 10 && cursorPosition.x < 70 && cursorPosition.y > 10 && cursorPosition.y < 60){
-                    PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\click.wav",NULL,SND_SYNC);
+                    PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\assets\\click.wav",NULL,SND_SYNC);
                     setfillstyle(SOLID_FILL,BLACK);
                     bar(0,0,600,600);
                     cout<<"EXIT";
@@ -5549,9 +5549,9 @@ void citesteString(int window1)
 }
 
 void incepeTutorialul(int window){
-    readimagefile("evaluator.jpg",100,100,500,500);
-    readimagefile("right-arrow.jpg",510,250,600,300);
-    readimagefile("exit.jpg", 10,10,40,40);
+    readimagefile("assets\\evaluator.jpg",100,100,500,500);
+    readimagefile("assets\\right-arrow.jpg",510,250,600,300);
+    readimagefile("assets\\exit.jpg", 10,10,40,40);
 
     while(1){
 
@@ -5562,7 +5562,7 @@ void incepeTutorialul(int window){
             clearmouseclick(WM_LBUTTONDOWN);
             cout<<"x="<<x<<' '<<"y="<<y<<endl;
             if(x>510 && x<600 && y > 250 && y < 300){
-                PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\click.wav",NULL,SND_ASYNC);
+                PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\assets\\click.wav",NULL,SND_ASYNC);
                 setfillstyle(SOLID_FILL,BLACK);
                 bar(0,0,600,600);
                 setcolor(WHITE);
@@ -5581,12 +5581,12 @@ void incepeTutorialul(int window){
                     outtextxy(10,300,"Evaluatorul are si un sistem de detectare al");
                     outtextxy(10,320,"erorilor de scriere.Acestea pot aparea sub forma");
                     outtextxy(10,340,"urmatoare:");
-                    readimagefile("erori.jpg",100,360,500,400);
+                    readimagefile("assets\\erori.jpg",100,360,500,400);
 
                     outtextxy(10,400,"Pentru a scapa de erori si a putea continua");
                     outtextxy(10,420,"expresia trebuie sa apesi pe butonul delete");
                     outtextxy(10,440,"de pe ecran.");
-                    readimagefile("left-arrow.jpg",0,250,70,300);
+                    readimagefile("assets\\left-arrow.jpg",0,250,70,300);
                 }else{
 
 
@@ -5603,11 +5603,11 @@ void incepeTutorialul(int window){
                     outtextxy(10,300,"The evaluator has a sistem for detecting");
                     outtextxy(10,320,"the writing errors.These can appear in the following");
                     outtextxy(10,340,"form:");
-                    readimagefile("erori.jpg",100,360,500,400);
+                    readimagefile("assets\\erori.jpg",100,360,500,400);
 
                     outtextxy(10,400,"To delete the errors and continue entering the function");
                     outtextxy(10,420,"you need to press on the delete button.");
-                    readimagefile("left-arrow.jpg",0,250,70,300);
+                    readimagefile("assets\\left-arrow.jpg",0,250,70,300);
                 }
 
                 while(1){
@@ -5616,7 +5616,7 @@ void incepeTutorialul(int window){
                         int x = mousex(), y = mousey();
                         clearmouseclick(WM_LBUTTONDOWN);
                         if(x>0 && x<100 && y > 250 && y < 300){
-                                PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\click.wav",NULL,SND_ASYNC);
+                                PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\assets\\click.wav",NULL,SND_ASYNC);
                                 setfillstyle(SOLID_FILL,BLACK);
                                 bar(0,0,600,600);
                                 incepeTutorialul(window);
@@ -5625,7 +5625,7 @@ void incepeTutorialul(int window){
                     }
                 }
             }else if(x>10 && x<40 && y>10 && y<40){
-                PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\click.wav",NULL,SND_ASYNC);
+                PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\assets\\click.wav",NULL,SND_ASYNC);
                 setfillstyle(SOLID_FILL,BLACK);
                 bar(0,0,600,600);
                 pornesteProgramul(window);
@@ -5684,8 +5684,8 @@ void deseneazaEcranulDeStart(){
         outtextxy(190,360,"Select Language");
     }
 
-    readimagefile("romania.jpg",220,400,260,450);
-    readimagefile("english.jpg",350,400,390,450);
+    readimagefile("assets\\romania.jpg",220,400,260,450);
+    readimagefile("assets\\english.jpg",350,400,390,450);
 
 }
 
@@ -5704,7 +5704,7 @@ bool esteInegalitateSauEgalitate(char *expresie)
 }
 void pornesteProgramul(int window)
 {
-    readimagefile("bg.jpg",0,0,600, 600);
+    readimagefile("assets\\bg.jpg",0,0,600, 600);
     deseneazaEcranulDeStart();
     while(1)
     {
@@ -5714,14 +5714,14 @@ void pornesteProgramul(int window)
             x = mousex(), y = mousey();
             clearmouseclick(WM_LBUTTONDOWN);
             if(x > 200 && x < 400 && y > 200 && y < 250){
-                PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\click.wav",NULL,SND_SYNC);
+                PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\assets\\click.wav",NULL,SND_SYNC);
                 setfillstyle(SOLID_FILL,BLACK);
                 bar(0,0,600,600);
                 setcolor(WHITE);
                 citesteString(window);
             }else if( x > 200 && x < 400 && y > 300 && y < 350)
             {
-                PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\click.wav",NULL,SND_SYNC);
+                PlaySound((LPCSTR)"C:\\Users\\codeblocks\\Desktop\\evaluatorMatematic\\assets\\click.wav",NULL,SND_SYNC);
                 setfillstyle(SOLID_FILL,BLACK);
                 bar(0,0,600,600);
                 incepeTutorialul(window);
