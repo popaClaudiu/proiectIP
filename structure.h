@@ -715,18 +715,20 @@ void floatToString(float x , char* sir)
 
     while(parte_intreaga)
     {
-      contor++;
       itoa(parte_intreaga%10,cifra,10);
       strcat(sir,cifra);
       parte_intreaga /= 10;
     }
 
-    x = x / 10 * contor;
+    if(parte_intreaga == 0) strcat(sir,"0");
+    if(x<0) x = x*(-1);
 
-    parte_rationala = x;
+    int x_rezerva = (int)(x * 100);
+
+    parte_rationala = x_rezerva;
     strcat(sir,".");
 
-    parte_rationala *= 100;
+    //parte_rationala *= 100;
     itoa((unsigned int)parte_rationala%100, cifra, 10);
     strcat(sir,cifra);
 
