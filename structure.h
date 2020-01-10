@@ -246,7 +246,7 @@ void puneZerouriInExpresie(functie &E)
 
 bool esteOperatie(int t1, int t2, int i)
 {
-    return (!((5 <= t1 && t1 > 10) && (t2 == 1)) || (strchr("=#<>", E.expresie[i - 2])));
+    return (!((5 <= t1 && t1 > 13) && (t2 == 1)) || (strchr("=#<>", E.expresie[i - 2])));
 }
 
 bool seAflaInParanteza(int t1, int t2, int i)
