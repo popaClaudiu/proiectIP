@@ -2,6 +2,7 @@
 #include <string.h>
 #include <iostream>
 #include <stdlib.h>
+#include <string>
 #define infinit 10000000000
 #define epsilon 0.000000001
 #define pi 3.1415926
@@ -85,7 +86,6 @@ float impartit(float x, float y)
 {
     return modul(y) > epsilon ? x / y : infinit;
 }
-
 float putere(float x, float y)
 {
     int i, yi;
@@ -105,7 +105,7 @@ float putere(float x, float y)
             std::cout << "incepem sa inmultim"
                       << "\n";
             yi = trunc(y);
-            std::cout<<x<<" si "<<yi<<"\n";
+            std::cout << x << " si " << yi << "\n";
             p = 1;
             for (i = 1; i <= (yi / 2); i++)
             {
@@ -117,7 +117,7 @@ float putere(float x, float y)
             if (!estePar(yi))
             {
                 p *= x;
-                std::cout <<"Impar p=" << p;
+                std::cout << "Impar p=" << p;
             }
 
             return p;
@@ -230,31 +230,32 @@ bool esteIntreg(float v)
 */
 int tipCaracter(char c)
 {
-
     int tip = 100;
-    if (strchr("0123456789.", c))
+    if (c != '\0')
     {
-        tip = 1;
-    }
-    else if (strchr("cosinlgexpabrdt", c))
-    {
-        tip = 2;
-    }
-    else
-    {
-        char operatori[] = "()+-*/^Xq=#<>";
-        int i = 0;
-        while (operatori[i])
+        if (strchr("0123456789.", c))
         {
-            if (c == operatori[i])
+            tip = 1;
+        }
+        else if (strchr("cosinlgexpabrdt", c))
+        {
+            tip = 2;
+        }
+        else
+        {
+            char operatori[] = "()+-*/^=#<>Xq";
+            int i = 0;
+            while (operatori[i])
             {
-                tip = 3 + i;
-                break;
+                if (c == operatori[i])
+                {
+                    tip = 3 + i;
+                    break;
+                }
+                i++;
             }
-            i++;
         }
     }
-
     return tip;
 }
 
@@ -276,7 +277,6 @@ float valoareaOperandului(char *s, int &cod)
             j++;
         }
     }
-
     cod = atof(s1);
     return atof(s1);
 }
@@ -298,7 +298,8 @@ bool nuEsteOperatorulExponent(char *expresie, int i)
 /**
  * Deplaseaza sirul de la o pozitie data pana la o pozitie data
 */
-void desplaseazaSirul(char* sir, int start, int stop){
+void desplaseazaSirul(char *sir, int start, int stop)
+{
     for (int i = start; i > stop; i--)
     {
         sir[i] = sir[i - 1];

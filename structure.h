@@ -25,6 +25,7 @@ struct record
 };
 typedef record functie;
 functie E;
+int greseala = 0;
 
 void citesteFunctie(functie &E);
 void formeazaExpresia(functie &E);
@@ -170,7 +171,6 @@ void transformaInVector(functie &E)
 
 /**
  * Evidentiaza variabilele din expresie
- * Pune 
 */
 void evidentiazaVariabilele(functie &E)
 {
@@ -196,7 +196,6 @@ void evidentiazaVariabilele(functie &E)
 /**
  * Pune zerouri in expresie
  * Eg: (- => (0+ , (+ => (0+
- * 
 */
 void puneZerouriInExpresie(functie &E)
 {
@@ -246,7 +245,7 @@ void puneZerouriInExpresie(functie &E)
 
 bool esteOperatie(int t1, int t2, int i)
 {
-    return (!((5 <= t1 && t1 > 10) && (t2 == 1)) || (strchr("=#<>", E.expresie[i - 2])));
+    return (!((5 <= t1 && t1 > 13) && (t2 == 1)) || (strchr("=#<>", E.expresie[i - 2])));
 }
 
 bool seAflaInParanteza(int t1, int t2, int i)
@@ -528,38 +527,11 @@ float valoareFunctiei(functie E, float x)
     }
 }
 
-/**
- * Afiseaza greselile gasite in expresia functiei
-*/
-void afiseazaGreseli(int greseli[2][10], int j)
-{
-    for (int i = 0; i < j; i++)
-    {
-        switch (greseli[1][i])
-        {
-        case EROARE_ESTE_O_LITERA_DUPA_O_CIFRA:
-            printf("La pozitia %d. Dupa o cifra nu poate urma  o litera.\n", greseli[0][i]);
-            break;
-
-        case EROARE_SIRUL_SE_TERMINA_BRUSC:
-            printf("La pozitia %d. Dupa o ( sirul se termina brusc.\n", greseli[0][i]);
-            break;
-        case EROARE_DUPA_PARANTEZA_NU_ESTE_OP_BINAR:
-            printf("La pozitia %d. Dupa o ) nu poate urma un numar sau paranteza se termina brusc.\n", greseli[0][i]);
-            break;
-        case EROARE_IMPARTIRE_LA_0:
-            printf("La pozitia %d. Nu poti imparti la 0.\n", greseli[0][i]);
-            break;
-        case EROARE_RADICAL_SAU_LOGARITM_DIN_NR_NEGATIV:
-            printf("La pozitia %d. Nu poti face radical din numar negativ!\n", greseli[0][i]);
-            break;
-        }
-    }
-}
+void afiseazaGreseli(int greseli[2][10],int j);
 
 bool esteOLiteraDupaOCifra(char *s, int i)
 {
-    return (strchr("0987654321.", s[i]) && strchr("x", s[i + 1]) && s[i + 1] != '\0');
+    return (strchr("0987654321.", s[i]) && strchr("xX", s[i + 1]) && s[i + 1] != '\0');
 }
 
 bool dupaParantezaEsteOperatorBinar(char *s, int i)
@@ -569,12 +541,12 @@ bool dupaParantezaEsteOperatorBinar(char *s, int i)
 
 bool esteImpartireLa0(char *s, int i)
 {
-    return (strchr("/", s[i]) && strchr("x", s[i + 1]) && E.x == 0);
+    return (strchr("/", s[i]) && strchr("xX", s[i + 1]) && E.x == 0);
 }
 
 bool esteRadicalSauLogaritmDinNumarNegativ(char *s, int i)
 {
-    return (strchr("dg", s[i]) && (s[i + 2] == '-' || (s[i + 2] == 'x' && E.x < 0)));
+    return (strchr("dg", s[i]) && (s[i + 2] == '-' || (strchr("xX",s[i+2]) && E.x < 0)));
 }
 
 /**
@@ -585,7 +557,8 @@ void valideazaFunctia(functie &E)
     cout << "Validez expresia: " << E.expresie << endl;
     char s[255];
     strcpy(s, E.expresie);
-    int n = strlen(s), greseli[2][10], nrGreseli = 0, i, greseala = 0;
+    int n = strlen(s), greseli[2][10], nrGreseli = 0, i;
+
     for (i = 0; i < 10; i++)
     {
         greseli[0][i] = 0;
@@ -653,7 +626,6 @@ void valideazaFunctia(functie &E)
     {
         afiseazaGreseli(greseli, nrGreseli);
         strcpy(E.expresie, "\0");
-        citesteFunctie(E);
     }
     else
     {
@@ -677,3 +649,95 @@ void afisare(functie E)
         printf("f(%f)=INPUT INVALID", E.x);
     }
 }
+
+/* A utility function to reverse a string  */
+void reverse(char str[], int length)
+{
+    int start = 0;
+    int end = length -1;
+    while (start < end)
+    {
+        swap(*(str+start), *(str+end));
+        start++;
+        end--;
+    }
+}
+
+// Implementation of itoa()
+char* itoa(int num, char* str, int base)
+{
+    int i = 0;
+    bool isNegative = false;
+
+    /* Handle 0 explicitely, otherwise empty string is printed for 0 */
+    if (num == 0)
+    {
+        str[i++] = '0';
+        str[i] = '\0';
+        return str;
+    }
+
+    // In standard itoa(), negative numbers are handled only with
+    // base 10. Otherwise numbers are considered unsigned.
+    if (num < 0 && base == 10)
+    {
+        isNegative = true;
+        num = -num;
+    }
+
+    // Process individual digits
+    while (num != 0)
+    {
+        int rem = num % base;
+        str[i++] = (rem > 9)? (rem-10) + 'a' : rem + '0';
+        num = num/base;
+    }
+
+    // If number is negative, append '-'
+    if (isNegative)
+        str[i++] = '-';
+
+    str[i] = '\0'; // Append string terminator
+
+    // Reverse the string
+    reverse(str, i);
+
+    return str;
+}
+
+void floatToString(float x , char* sir)
+{
+    int parte_intreaga,contor=0;
+    float parte_rationala;
+    char cifra[100];
+    parte_intreaga = (int) x;
+
+    while(parte_intreaga)
+    {
+      itoa(parte_intreaga%10,cifra,10);
+      strcat(sir,cifra);
+      parte_intreaga /= 10;
+    }
+    reverse(sir,strlen(sir));
+
+    if((int)x == 0){
+        if(x<0){
+            strcat(sir,"-0");
+        }else{
+            strcat(sir,"0");
+        }
+    }
+    if(x<0) x = x*(-1);
+
+    int x_rezerva = (int)(x * 100);
+
+    parte_rationala = x_rezerva;
+    strcat(sir,".");
+
+    //parte_rationala *= 100;
+    itoa((unsigned int)parte_rationala%100, cifra, 10);
+    strcat(sir,cifra);
+
+
+}
+
