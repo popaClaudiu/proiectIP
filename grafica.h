@@ -4677,7 +4677,7 @@ void citesteString(int window1)
     {
         strcpy(E.expresie,c);
 
-        bar(10,110,590,140);
+        bar(10,110,590,135);
         settextstyle(BOLD_FONT,HORIZ_DIR,2);
         outtextxy(15,115,E.expresie);
 
@@ -5488,7 +5488,7 @@ void citesteString(int window1)
                         greseala = 0;
                         setfillstyle(SOLID_FILL,BLACK);
                     }
-                    bar(0,150,600,271);
+                    bar(0,150,600,270);
                 }
 
                 strcpy(E.expresie,c);
@@ -5496,9 +5496,11 @@ void citesteString(int window1)
 
                 if(greseala == 1)
                 {
+                    greseala = 0;
                     setfillstyle(SOLID_FILL,BLACK);
                     bar(0,205,600,268);
                     apasatAfis2 = 0;
+                    apasatAfis1 = 0;
                 }else{
                     formeazaExpresia(E);
                     E.x = atoi(c2);
@@ -5541,6 +5543,9 @@ void citesteString(int window1)
             {
                 setfillstyle(SOLID_FILL,BLACK);
                 bar(0,205,600,265);
+                apasatAfis2 = 0;
+                apasatAfis1 = 0;
+                greseala = 0;
             }
         }
         delay(10);
@@ -5549,7 +5554,10 @@ void citesteString(int window1)
 }
 
 void incepeTutorialul(int window){
-    readimagefile("assets\\evaluator.jpg",100,100,500,500);
+    if(instrusctiuniRO)
+        readimagefile("assets\\evaluator.jpg",100,100,500,500);
+    else
+        readimagefile("assets\\evaluator-en.jpg",100,100,500,500);
     readimagefile("assets\\right-arrow.jpg",510,250,600,300);
     readimagefile("assets\\exit.jpg", 10,10,40,40);
 
