@@ -4943,7 +4943,6 @@ void citesteString(int window1)
                     c[strlen(c)-1] = '\0';
                     apasatAfis1 = 0;
                     apasatAfis2 = 0;
-                    strcpy(E.expresie,c);
                     cout<<E.expresie<<endl;
                     //cinTastatura(window1,c,nr2,lungimeSir);
                 }
